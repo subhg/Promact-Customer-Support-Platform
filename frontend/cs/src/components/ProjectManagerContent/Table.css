@@ -1,43 +1,43 @@
 /* ResourceTable.css */
 
 .resource-container {
-    font-family: 'Arial', sans-serif;
-    max-width: 800px;
-    margin: auto;
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-  }
-  
-  .header {
-    background-color: #f2f2f2;
-  }
-  
-  .header th,
-  .cell td {
-    padding: 12px;
-    text-align: left;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border: 1px solid lightgrey;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .button {
-    margin-right: 8px;
-    margin-bottom: 8px;
-  }
-  
-  /* Add margin to the Add Resource button */
-  add-button {
-    margin-left: 16px;
-  }
-  
+  font-family: 'Arial', sans-serif;
+  max-width: 800px;
+  margin: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.header {
+  background-color: #f2f2f2;
+}
+
+.header th,
+.cell td {
+  padding: 12px;
+  text-align: left;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.button {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+/* Add margin to the Add Resource button */
+.add-button {
+  margin-left: 16px;
+}
+

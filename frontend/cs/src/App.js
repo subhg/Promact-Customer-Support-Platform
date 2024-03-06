@@ -1,3 +1,5 @@
+// App.js
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -35,7 +37,7 @@ const App = () => {
           )}
 
           {!isAuthenticated && (
-            // If user is not authenticated, show the login button
+            // If the user is not authenticated, show the login button
             <h1>Click on Login Button to access</h1>
           )}
         </div>

@@ -1,17 +1,26 @@
+// ProjectUpdateTable.js
+
 import React, { useEffect, useState } from 'react';
 import { Button } from 'monday-ui-react-core';
-import './Table.css'
+import './Table.css';
 
+/**
+ * ProjectUpdateTable component manages the display and management of project updates.
+ */
 const ProjectUpdateTable = () => {
+  // State to manage project update data
   const [projectUpdates, setProjectUpdates] = useState([]);
+  // State to manage the data for a new project update
   const [newUpdate, setNewUpdate] = useState({ date: '', generalUpdates: '', project: '' });
+  // State to manage the editing state of each row
   const [editingRows, setEditingRows] = useState({});
 
+  // Fetch project update data when the component mounts
   useEffect(() => {
-    // Fetch project update data when the component mounts
     fetchProjectUpdates();
   }, []);
 
+  // Fetch project update data from the server
   const fetchProjectUpdates = async () => {
     try {
       const response = await fetch('http://localhost:3000/projectUpdate');
@@ -22,6 +31,7 @@ const ProjectUpdateTable = () => {
     }
   };
 
+  // Handle input change for each cell in the table
   const handleInputChange = (key, value, updateId) => {
     // Update the newUpdate state with the modified value
     if (updateId) {
@@ -35,6 +45,7 @@ const ProjectUpdateTable = () => {
     }
   };
 
+  // Handle adding a new project update
   const handleAddUpdate = async () => {
     try {
       // Convert the date string to a Date object
@@ -70,7 +81,7 @@ const ProjectUpdateTable = () => {
     }
   };
   
-
+  // Handle updating an existing project update
   const handleUpdateUpdate = async (id) => {
     try {
       const updatedUpdate = projectUpdates.find((update) => update._id === id);
@@ -93,6 +104,7 @@ const ProjectUpdateTable = () => {
     }
   };
 
+  // Handle deleting an existing project update
   const handleDeleteUpdate = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/projectUpdate/${id}`, {
@@ -110,6 +122,7 @@ const ProjectUpdateTable = () => {
     }
   };
 
+  // Toggle editing state for a row
   const toggleEditing = (id) => {
     setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
@@ -117,7 +130,9 @@ const ProjectUpdateTable = () => {
   return (
     <div>
       <h1>Project Updates</h1>
+      {/* Table for displaying project updates */}
       <table className='table'>
+        {/* Table header */}
         <thead className='header'>
           <tr>
             <th>Date</th>
@@ -126,9 +141,12 @@ const ProjectUpdateTable = () => {
             <th>Action</th>
           </tr>
         </thead>
+        {/* Table body */}
         <tbody>
+          {/* Map through project updates to generate rows */}
           {projectUpdates.map((update) => (
             <tr key={update._id}>
+              {/* Display cells with input fields when editing */}
               <td>
                 {editingRows[update._id] ? (
                   <input
@@ -165,18 +183,20 @@ const ProjectUpdateTable = () => {
                   update.project
                 )}
               </td>
+              {/* Display action buttons for each row */}
               <td>
                 {editingRows[update._id] ? (
-                  <Button className="button"  onClick={() => handleUpdateUpdate(update._id)}>Update</Button>
+                  <Button className="button" onClick={() => handleUpdateUpdate(update._id)}>Update</Button>
                 ) : (
                   <Button className="button" onClick={() => toggleEditing(update._id)}>Edit</Button>
                 )}
-                <Button className="button"  onClick={() => handleDeleteUpdate(update._id)}>Delete</Button>
+                <Button className="button" onClick={() => handleDeleteUpdate(update._id)}>Delete</Button>
               </td>
             </tr>
           ))}
           {/* New Project Update Row */}
           <tr>
+            {/* Display input fields for each cell in the new project update row */}
             <td>
               <input
                 className='input'
@@ -201,6 +221,7 @@ const ProjectUpdateTable = () => {
                 onChange={(e) => handleInputChange('project', e.target.value)}
               />
             </td>
+            {/* Display button for adding a new project update */}
             <td>
               <Button className="add-button" onClick={handleAddUpdate}>Add Update</Button>
             </td>

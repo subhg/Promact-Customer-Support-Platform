@@ -1,37 +1,39 @@
 /* Profile.css */
 
+/* Styles for the container of the profile information */
 .profile-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  
-  .profile-image {
-    width: 50px; /* Adjust the width as needed */
-    height: auto; /* Adjust the height as needed */
-    border-radius: 50%;
-    padding-right: 5px;
-  }
-  
-  .profile-info {
-    text-align: left;
-    margin-top: 10px;
-    margin-left: 10px;
-    
-  }
-  
-  .profile-name {
-    font-size: 16px; /* Adjust the font size as needed */
-    font-weight: bold;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 
-  }
-  
-  .profile-email {
-    margin-top: 0;
-    padding-top: 0;
-    font-size: 12px; /* Adjust the font size as needed */
-    color: #555; /* Adjust the color as needed */
-  }
-  
+/* Styles for the profile image */
+.profile-image {
+  width: 50px; /* Adjust the width as needed */
+  height: auto; /* Adjust the height as needed */
+  border-radius: 50%;
+  padding-right: 5px;
+}
+
+/* Styles for the container of the profile information excluding the image */
+.profile-info {
+  text-align: left;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+/* Styles for the profile name */
+.profile-name {
+  font-size: 16px; /* Adjust the font size as needed */
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
+
+/* Styles for the profile email */
+.profile-email {
+  margin-top: 0;
+  padding-top: 0;
+  font-size: 12px; /* Adjust the font size as needed */
+  color: #555; /* Adjust the color as needed */
+}

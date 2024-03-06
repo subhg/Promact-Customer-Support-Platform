@@ -5,6 +5,7 @@ import { Button } from 'monday-ui-react-core';
 //import './Table.css';
 
 const ClientFeedbackTable = () => {
+  // State variables
   const [clientFeedback, setClientFeedback] = useState([]);
   const [newFeedback, setNewFeedback] = useState({
     feedbackType: '',
@@ -21,6 +22,7 @@ const ClientFeedbackTable = () => {
     fetchClientFeedback();
   }, []);
 
+  // Fetch client feedback data from the server
   const fetchClientFeedback = async () => {
     try {
       const response = await fetch('http://localhost:3000/clientFeedback');
@@ -31,6 +33,7 @@ const ClientFeedbackTable = () => {
     }
   };
 
+  // Handle input change in the form
   const handleInputChange = (key, value, feedbackId) => {
     // Update the newFeedback state with the modified value
     if (feedbackId) {
@@ -44,6 +47,7 @@ const ClientFeedbackTable = () => {
     }
   };
 
+  // Handle adding new feedback
   const handleAddFeedback = async () => {
     try {
       const response = await fetch('http://localhost:3000/clientFeedback', {
@@ -74,6 +78,7 @@ const ClientFeedbackTable = () => {
     }
   };
 
+  // Handle updating existing feedback
   const handleUpdateFeedback = async (id) => {
     try {
       const updatedFeedback = clientFeedback.find((feedback) => feedback._id === id);
@@ -96,6 +101,7 @@ const ClientFeedbackTable = () => {
     }
   };
 
+  // Handle deleting existing feedback
   const handleDeleteFeedback = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/clientFeedback/${id}`, {
@@ -113,13 +119,15 @@ const ClientFeedbackTable = () => {
     }
   };
 
+  // Toggle editing mode for a specific row
   const toggleEditing = (id) => {
     setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
 
+  // Render the component
   return (
     <div>
-      <h1>Client Feedback </h1>
+      <h1>Client Feedback</h1>
       <table className="table">
         <thead className="header">
           <tr>

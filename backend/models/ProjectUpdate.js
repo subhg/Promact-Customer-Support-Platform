@@ -8,11 +8,11 @@ const Schema = mongoose.Schema;
 const projectUpdateSchema = new Schema({
   date: {
     type: Date,
-    required: true
+    required: true // Date of the update is a required field
   },
   generalUpdates: {
     type: String,
-    required: true
+    required: true // General updates is a required field
   },
   project: {
     type: String,

@@ -1,17 +1,26 @@
+// ApprovedTeamTable.js
+
 import React, { useEffect, useState } from 'react';
 import { Button } from 'monday-ui-react-core';
 import './Table.css';
 
+/**
+ * ApprovedTeamTable component manages the display and management of approved teams.
+ */
 const ApprovedTeamTable = () => {
+  // State to manage approved teams data
   const [approvedTeams, setApprovedTeams] = useState([]);
+  // State to manage the data for a new team
   const [newTeam, setNewTeam] = useState({ phase: '', name: '', role: '', availability: '', duration: '' });
+  // State to manage the editing state of each row
   const [editingRows, setEditingRows] = useState({});
 
+  // Fetch approved team data when the component mounts
   useEffect(() => {
-    // Fetch approved team data when the component mounts
     fetchApprovedTeams();
   }, []);
 
+  // Fetch approved team data from the server
   const fetchApprovedTeams = async () => {
     try {
       const response = await fetch('http://localhost:3000/approvedTeam');
@@ -22,6 +31,7 @@ const ApprovedTeamTable = () => {
     }
   };
 
+  // Handle input change for each cell in the table
   const handleInputChange = (key, value, teamId) => {
     // Update the newTeam state with the modified value
     if (teamId) {
@@ -35,6 +45,7 @@ const ApprovedTeamTable = () => {
     }
   };
 
+  // Handle adding a new team
   const handleAddTeam = async () => {
     try {
       const response = await fetch('http://localhost:3000/approvedTeam', {
@@ -58,6 +69,7 @@ const ApprovedTeamTable = () => {
     }
   };
 
+  // Handle updating an existing team
   const handleUpdateTeam = async (id) => {
     try {
       const updatedTeam = approvedTeams.find((team) => team._id === id);
@@ -80,6 +92,7 @@ const ApprovedTeamTable = () => {
     }
   };
 
+  // Handle deleting an existing team
   const handleDeleteTeam = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/approvedTeam/${id}`, {
@@ -97,6 +110,7 @@ const ApprovedTeamTable = () => {
     }
   };
 
+  // Toggle editing state for a row
   const toggleEditing = (id) => {
     setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
@@ -104,7 +118,9 @@ const ApprovedTeamTable = () => {
   return (
     <div>
       <h1>Approved Team Management</h1>
+      {/* Table for displaying approved teams */}
       <table className="table">
+        {/* Table header */}
         <thead className="header">
           <tr>
             <th>Phase</th>
@@ -115,9 +131,12 @@ const ApprovedTeamTable = () => {
             <th>Action</th>
           </tr>
         </thead>
+        {/* Table body */}
         <tbody>
+          {/* Map through approved teams to generate rows */}
           {approvedTeams.map((team) => (
             <tr key={team._id}>
+              {/* Display cells with input fields when editing */}
               <td>
                 {editingRows[team._id] ? (
                   <input
@@ -178,6 +197,7 @@ const ApprovedTeamTable = () => {
                   team.duration
                 )}
               </td>
+              {/* Display action buttons for each row */}
               <td>
                 {editingRows[team._id] ? (
                   <Button className="button" onClick={() => handleUpdateTeam(team._id)}>Update</Button>
@@ -190,6 +210,7 @@ const ApprovedTeamTable = () => {
           ))}
           {/* New Team Row */}
           <tr>
+            {/* Display input fields for each cell in the new team row */}
             <td>
               <input
                 className="input"
@@ -230,6 +251,7 @@ const ApprovedTeamTable = () => {
                 onChange={(e) => handleInputChange('duration', e.target.value)}
               />
             </td>
+            {/* Display button for adding a new team */}
             <td>
               <Button className="add-button" onClick={handleAddTeam}>Add Team</Button>
             </td>

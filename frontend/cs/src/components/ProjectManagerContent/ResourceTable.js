@@ -1,17 +1,26 @@
+// ResourceTable.js
+
 import React, { useEffect, useState } from 'react';
 import { Button } from 'monday-ui-react-core';
 import './Table.css';
 
+/**
+ * ResourceTable component manages the display and management of resources.
+ */
 const ResourceTable = () => {
+  // State to manage resource data
   const [resources, setResources] = useState([]);
+  // State to manage the data for a new resource
   const [newResource, setNewResource] = useState({ name: '', role: '', startDate: '', endDate: '', comment: '' });
+  // State to manage the editing state of each row
   const [editingRows, setEditingRows] = useState({});
 
+  // Fetch resource data when the component mounts
   useEffect(() => {
-    // Fetch resource data when the component mounts
     fetchResources();
   }, []);
 
+  // Fetch resource data from the server
   const fetchResources = async () => {
     try {
       const response = await fetch('http://localhost:3000/resource');
@@ -22,6 +31,7 @@ const ResourceTable = () => {
     }
   };
 
+  // Handle input change for each cell in the table
   const handleInputChange = (key, value, resourceId) => {
     // Update the newResource state with the modified value
     if (resourceId) {
@@ -35,6 +45,7 @@ const ResourceTable = () => {
     }
   };
 
+  // Handle adding a new resource
   const handleAddResource = async () => {
     try {
       const response = await fetch('http://localhost:3000/resource', {
@@ -58,6 +69,7 @@ const ResourceTable = () => {
     }
   };
 
+  // Handle updating an existing resource
   const handleUpdateResource = async (id) => {
     try {
       const updatedResource = resources.find((resource) => resource._id === id);
@@ -80,6 +92,7 @@ const ResourceTable = () => {
     }
   };
 
+  // Handle deleting an existing resource
   const handleDeleteResource = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/resource/${id}`, {
@@ -97,6 +110,7 @@ const ResourceTable = () => {
     }
   };
 
+  // Toggle editing state for a row
   const toggleEditing = (id) => {
     setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
@@ -104,7 +118,9 @@ const ResourceTable = () => {
   return (
     <div>
       <h1>Resource Management</h1>
+      {/* Table for displaying resources */}
       <table className="table">
+        {/* Table header */}
         <thead className="header">
           <tr>
             <th>Name</th>
@@ -115,9 +131,12 @@ const ResourceTable = () => {
             <th>Action</th>
           </tr>
         </thead>
+        {/* Table body */}
         <tbody>
+          {/* Map through resources to generate rows */}
           {resources.map((resource) => (
             <tr key={resource._id}>
+              {/* Display cells with input fields when editing */}
               <td>
                 {editingRows[resource._id] ? (
                   <input
@@ -178,6 +197,7 @@ const ResourceTable = () => {
                   resource.comment
                 )}
               </td>
+              {/* Display action buttons for each row */}
               <td>
                 {editingRows[resource._id] ? (
                   <Button className="button" onClick={() => handleUpdateResource(resource._id)}>Update</Button>
@@ -190,6 +210,7 @@ const ResourceTable = () => {
           ))}
           {/* New Resource Row */}
           <tr>
+            {/* Display input fields for each cell in the new resource row */}
             <td>
               <input
                 className="input"
@@ -230,6 +251,7 @@ const ResourceTable = () => {
                 onChange={(e) => handleInputChange('comment', e.target.value)}
               />
             </td>
+            {/* Display button for adding a new resource */}
             <td>
               <Button className="add-button" onClick={handleAddResource}>Add Resource</Button>
             </td>

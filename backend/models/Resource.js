@@ -8,28 +8,27 @@ const Schema = mongoose.Schema;
 const resourceSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true // Name of the resource is a required field
   },
   role: {
     type: String,
-    required: true
+    required: true // Role of the resource is a required field
   },
   startDate: {
     type: Date,
-    required: true
+    required: true // Start date of the resource is a required field
   },
   endDate: {
     type: Date,
-    required: true
+    required: true // End date of the resource is a required field
   },
   comment: {
-    type: String
+    type: String // Optional: Additional comments about the resource
   },
   //project: {
-  //  type: Schema.Types.ObjectId,
+  //  type: String,
   //  ref: 'Project',
   //  required: true
-    // Assuming you have a Project model and you want to associate the resource with a specific project
   //}
 });
 

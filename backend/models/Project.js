@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const approvedTeamSchema = new Schema({
   phase: {
     type: String,
-    required: true
+    required: true // Phase of the approved team is a required field
   },
   resources: [
     {
@@ -20,15 +20,15 @@ const approvedTeamSchema = new Schema({
 const clientFeedbackSchema = new Schema({
   feedbackType: {
     type: String,
-    required: true
+    required: true // Type of feedback is a required field
   },
   dateReceived: {
     type: Date,
-    required: true
+    required: true // Date of feedback receipt is a required field
   },
   detailedFeedback: {
     type: String,
-    required: true
+    required: true // Detailed feedback is a required field
   },
   actionTaken: {
     type: String
@@ -42,11 +42,11 @@ const clientFeedbackSchema = new Schema({
 const projectUpdateSchema = new Schema({
   date: {
     type: Date,
-    required: true
+    required: true // Date of the update is a required field
   },
   generalUpdates: {
     type: String,
-    required: true
+    required: true // General updates is a required field
   }
 });
 
@@ -54,11 +54,11 @@ const projectUpdateSchema = new Schema({
 const clientMeetingSchema = new Schema({
   date: {
     type: Date,
-    required: true
+    required: true // Date of the meeting is a required field
   },
   duration: {
     type: String,
-    required: true
+    required: true // Duration of the meeting is a required field
   },
   momLink: {
     type: String
@@ -72,10 +72,10 @@ const clientMeetingSchema = new Schema({
 const projectSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true // Project name is a required field
   },
   description: {
-    type: String
+    type: String // Description of the project (optional field)
   },
   approvedTeam: [approvedTeamSchema],
   resources: [
@@ -90,14 +90,14 @@ const projectSchema = new Schema({
   createdBy: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true // Creator of the project is a required field
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now // Default value for the creation date
   },
   updatedAt: {
-    type: Date
+    type: Date // Date when the project was last updated (optional field)
   }
 });
 
