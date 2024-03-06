@@ -1,13 +1,14 @@
-// ApprovedTeamTable.js
 import React, { useEffect, useState } from 'react';
-import './ApprovedTeamTable.css'
 import { Button } from 'monday-ui-react-core';
+import './Table.css';
 
 const ApprovedTeamTable = () => {
   const [approvedTeams, setApprovedTeams] = useState([]);
+  const [newTeam, setNewTeam] = useState({ phase: '', name: '', role: '', availability: '', duration: '' });
+  const [editingRows, setEditingRows] = useState({});
 
   useEffect(() => {
-    // Fetch data when the component mounts
+    // Fetch approved team data when the component mounts
     fetchApprovedTeams();
   }, []);
 
@@ -17,97 +18,94 @@ const ApprovedTeamTable = () => {
       const data = await response.json();
       setApprovedTeams(data);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching approved team data:', error);
     }
   };
 
-  const handleInputChange = (index, columnId, value) => {
-    // Update the state with the modified value
-    const updatedTeams = [...approvedTeams];
-    updatedTeams[index][columnId] = value;
-    setApprovedTeams(updatedTeams);
+  const handleInputChange = (key, value, teamId) => {
+    // Update the newTeam state with the modified value
+    if (teamId) {
+      setApprovedTeams((prevTeams) =>
+        prevTeams.map((team) =>
+          team._id === teamId ? { ...team, [key]: value } : team
+        )
+      );
+    } else {
+      setNewTeam((prevNewTeam) => ({ ...prevNewTeam, [key]: value }));
+    }
   };
 
-  const handleAddRow = () => {
-    setApprovedTeams([...approvedTeams, { phase: '', name: '', role: '', availability: '', duration: '' }]);
-  };
-
-  const handleUpdate = async (id) => {
+  const handleAddTeam = async () => {
     try {
-      // Check if the id is valid before proceeding with the update
-      if (!id) {
-        console.error('Invalid id for update');
-        return;
-      }
-  
-      const updatedData = approvedTeams.find((team) => team._id === id);
-  
+      const response = await fetch('http://localhost:3000/approvedTeam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTeam),
+      });
+
+      const addedTeam = await response.json();
+      console.log('Approved team added successfully:', addedTeam);
+
+      // Update the state after adding
+      setApprovedTeams([...approvedTeams, addedTeam]);
+
+      // Clear input fields
+      setNewTeam({ phase: '', name: '', role: '', availability: '', duration: '' });
+    } catch (error) {
+      console.error('Error adding approved team:', error);
+    }
+  };
+
+  const handleUpdateTeam = async (id) => {
+    try {
+      const updatedTeam = approvedTeams.find((team) => team._id === id);
+
       const response = await fetch(`http://localhost:3000/approvedTeam/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify(updatedTeam),
       });
-  
+
       const updatedResult = await response.json();
-      console.log('Data updated successfully:', updatedResult);
+      console.log('Approved team updated successfully:', updatedResult);
+
+      // Disable editing after saving
+      setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: false }));
     } catch (error) {
-      console.error('Error updating data:', error);
+      console.error('Error updating approved team:', error);
     }
   };
-  
 
-  const handleDelete = async (id) => {
+  const handleDeleteTeam = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/approvedTeam/${id}`, {
         method: 'DELETE',
       });
 
       const deletedResult = await response.json();
-      console.log('Data deleted successfully:', deletedResult);
+      console.log('Approved team deleted successfully:', deletedResult);
 
       // Update the state after deletion
       const updatedTeams = approvedTeams.filter((team) => team._id !== id);
       setApprovedTeams(updatedTeams);
     } catch (error) {
-      console.error('Error deleting data:', error);
+      console.error('Error deleting approved team:', error);
     }
   };
 
-  const handleSave = async () => {
-    try {
-      // Add the "phase" field to each row before sending to the server
-      const dataToSend = approvedTeams.map((item) => ({
-        phase: item.phase,
-        name: item.name,
-        role: item.role,
-        availability: item.availability,
-        duration: item.duration,
-      }));
-
-      console.log('Data to be saved:', dataToSend);
-
-      const response = await fetch('http://localhost:3000/approvedTeam', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(dataToSend),
-      });
-
-      const data = await response.json();
-      console.log('Data saved successfully:', data);
-    } catch (error) {
-      console.error('Error saving data:', error);
-    }
+  const toggleEditing = (id) => {
+    setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
 
   return (
     <div>
-      <h1>Approved Team</h1>
-      <table>
-        <thead>
+      <h1>Approved Team Management</h1>
+      <table className="table">
+        <thead className="header">
           <tr>
             <th>Phase</th>
             <th>Name</th>
@@ -118,53 +116,126 @@ const ApprovedTeamTable = () => {
           </tr>
         </thead>
         <tbody>
-          {approvedTeams.map((item, index) => (
-            <tr key={index}>
+          {approvedTeams.map((team) => (
+            <tr key={team._id}>
               <td>
-                <input
-                  type="text"
-                  value={item.phase}
-                  onChange={(e) => handleInputChange(index, 'phase', e.target.value)}
-                />
+                {editingRows[team._id] ? (
+                  <input
+                    className="input"
+                    type="text"
+                    value={team.phase}
+                    onChange={(e) => handleInputChange('phase', e.target.value, team._id)}
+                  />
+                ) : (
+                  team.phase
+                )}
               </td>
               <td>
-                <input
-                  type="text"
-                  value={item.name}
-                  onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-                />
+                {editingRows[team._id] ? (
+                  <input
+                    className="input"
+                    type="text"
+                    value={team.name}
+                    onChange={(e) => handleInputChange('name', e.target.value, team._id)}
+                  />
+                ) : (
+                  team.name
+                )}
               </td>
               <td>
-                <input
-                  type="text"
-                  value={item.role}
-                  onChange={(e) => handleInputChange(index, 'role', e.target.value)}
-                />
+                {editingRows[team._id] ? (
+                  <input
+                    className="input"
+                    type="text"
+                    value={team.role}
+                    onChange={(e) => handleInputChange('role', e.target.value, team._id)}
+                  />
+                ) : (
+                  team.role
+                )}
               </td>
               <td>
-                <input
-                  type="text"
-                  value={item.availability}
-                  onChange={(e) => handleInputChange(index, 'availability', e.target.value)}
-                />
+                {editingRows[team._id] ? (
+                  <input
+                    className="input"
+                    type="text"
+                    value={team.availability}
+                    onChange={(e) => handleInputChange('availability', e.target.value, team._id)}
+                  />
+                ) : (
+                  team.availability
+                )}
               </td>
               <td>
-                <input
-                  type="text"
-                  value={item.duration}
-                  onChange={(e) => handleInputChange(index, 'duration', e.target.value)}
-                />
+                {editingRows[team._id] ? (
+                  <input
+                    className="input"
+                    type="text"
+                    value={team.duration}
+                    onChange={(e) => handleInputChange('duration', e.target.value, team._id)}
+                  />
+                ) : (
+                  team.duration
+                )}
               </td>
               <td>
-                <Button onClick={() => handleUpdate(item._id)}>Update</Button>
-                <Button onClick={() => handleDelete(item._id)}>Delete</Button>
+                {editingRows[team._id] ? (
+                  <Button className="button" onClick={() => handleUpdateTeam(team._id)}>Update</Button>
+                ) : (
+                  <Button className="button" onClick={() => toggleEditing(team._id)}>Edit</Button>
+                )}
+                <Button className="button" onClick={() => handleDeleteTeam(team._id)}>Delete</Button>
               </td>
             </tr>
           ))}
+          {/* New Team Row */}
+          <tr>
+            <td>
+              <input
+                className="input"
+                type="text"
+                value={newTeam.phase}
+                onChange={(e) => handleInputChange('phase', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                className="input"
+                type="text"
+                value={newTeam.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                className="input"
+                type="text"
+                value={newTeam.role}
+                onChange={(e) => handleInputChange('role', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                className="input"
+                type="text"
+                value={newTeam.availability}
+                onChange={(e) => handleInputChange('availability', e.target.value)}
+              />
+            </td>
+            <td>
+              <input
+                className="input"
+                type="text"
+                value={newTeam.duration}
+                onChange={(e) => handleInputChange('duration', e.target.value)}
+              />
+            </td>
+            <td>
+              <Button className="add-button" onClick={handleAddTeam}>Add Team</Button>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <Button onClick={handleAddRow}>Add Row</Button>
-      <Button onClick={handleSave}>Save</Button>
     </div>
   );
 };

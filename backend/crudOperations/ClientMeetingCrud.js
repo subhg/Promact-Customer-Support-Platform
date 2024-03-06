@@ -21,6 +21,16 @@ const getClientMeetingById = async (clientMeetingId) => {
   }
 };
 
+const getAllClientMeeting = async () => {
+  try {
+    const result = await ClientMeeting.find();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 // Update
 const updateClientMeeting = async (clientMeetingId, newData) => {
   try {
@@ -48,6 +58,7 @@ const deleteClientMeeting = async (clientMeetingId) => {
 module.exports = {
   createClientMeeting,
   getClientMeetingById,
+  getAllClientMeeting,
   updateClientMeeting,
   deleteClientMeeting,
 };

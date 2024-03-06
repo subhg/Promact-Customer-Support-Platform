@@ -44,10 +44,20 @@ const deleteClientFeedback = async (clientFeedbackId) => {
     throw error;
   }
 };
+const getAllClientFeedback = async () => {
+  try {
+    const result = await ClientFeedback.find();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 module.exports = {
   createClientFeedback,
   getClientFeedbackById,
+  getAllClientFeedback,
   updateClientFeedback,
   deleteClientFeedback,
 };

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'monday-ui-react-core';
+import './Table.css'
 
 const ProjectUpdateTable = () => {
   const [projectUpdates, setProjectUpdates] = useState([]);
@@ -116,8 +117,8 @@ const ProjectUpdateTable = () => {
   return (
     <div>
       <h1>Project Updates</h1>
-      <table>
-        <thead>
+      <table className='table'>
+        <thead className='header'>
           <tr>
             <th>Date</th>
             <th>General Updates</th>
@@ -131,6 +132,7 @@ const ProjectUpdateTable = () => {
               <td>
                 {editingRows[update._id] ? (
                   <input
+                    className='input'
                     type="text"
                     value={update.date}
                     onChange={(e) => handleInputChange('date', e.target.value, update._id)}
@@ -142,6 +144,7 @@ const ProjectUpdateTable = () => {
               <td>
                 {editingRows[update._id] ? (
                   <input
+                    className='input'
                     type="text"
                     value={update.generalUpdates}
                     onChange={(e) => handleInputChange('generalUpdates', e.target.value, update._id)}
@@ -153,6 +156,7 @@ const ProjectUpdateTable = () => {
               <td>
                 {editingRows[update._id] ? (
                   <input
+                    className='input'
                     type="text"
                     value={update.project}
                     onChange={(e) => handleInputChange('project', e.target.value, update._id)}
@@ -163,11 +167,11 @@ const ProjectUpdateTable = () => {
               </td>
               <td>
                 {editingRows[update._id] ? (
-                  <Button onClick={() => handleUpdateUpdate(update._id)}>Update</Button>
+                  <Button className="button"  onClick={() => handleUpdateUpdate(update._id)}>Update</Button>
                 ) : (
-                  <Button onClick={() => toggleEditing(update._id)}>Update</Button>
+                  <Button className="button" onClick={() => toggleEditing(update._id)}>Edit</Button>
                 )}
-                <Button onClick={() => handleDeleteUpdate(update._id)}>Delete</Button>
+                <Button className="button"  onClick={() => handleDeleteUpdate(update._id)}>Delete</Button>
               </td>
             </tr>
           ))}
@@ -175,6 +179,7 @@ const ProjectUpdateTable = () => {
           <tr>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newUpdate.date}
                 onChange={(e) => handleInputChange('date', e.target.value)}
@@ -182,6 +187,7 @@ const ProjectUpdateTable = () => {
             </td>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newUpdate.generalUpdates}
                 onChange={(e) => handleInputChange('generalUpdates', e.target.value)}
@@ -189,13 +195,14 @@ const ProjectUpdateTable = () => {
             </td>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newUpdate.project}
                 onChange={(e) => handleInputChange('project', e.target.value)}
               />
             </td>
             <td>
-              <Button onClick={handleAddUpdate}>Add Update</Button>
+              <Button className="add-button" onClick={handleAddUpdate}>Add Update</Button>
             </td>
           </tr>
         </tbody>

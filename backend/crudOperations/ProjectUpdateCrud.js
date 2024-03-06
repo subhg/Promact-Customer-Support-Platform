@@ -21,6 +21,15 @@ const getProjectUpdateById = async (projectUpdateId) => {
   }
 };
 
+const getAllProjectUpdate = async () => {
+  try {
+    const result = await ProjectUpdate.find();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Update
 const updateProjectUpdate = async (projectUpdateId, newData) => {
   try {
@@ -48,6 +57,7 @@ const deleteProjectUpdate = async (projectUpdateId) => {
 module.exports = {
   createProjectUpdate,
   getProjectUpdateById,
+  getAllProjectUpdate,
   updateProjectUpdate,
   deleteProjectUpdate,
 };

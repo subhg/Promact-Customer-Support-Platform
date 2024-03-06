@@ -3,21 +3,14 @@ const ApprovedTeam = require('../models/ApprovedTeam.js');
 // Create
 const createApprovedTeam = async (data) => {
   try {
-    const arr=[]
-    for (const item of data){
-      const approvedTeam= new ApprovedTeam(item);
-      console.log (approvedTeam)
-      const result= await approvedTeam.save();
-      arr.push(result)
-    }
-    //const approvedTeam = new ApprovedTeam(data);
-    //console.log(approvedTeam)
-    
-    return arr;
+    const  approvedTeam= new ApprovedTeam(data);
+    const result = await approvedTeam.save();
+    return result;
   } catch (error) {
     throw error;
   }
 };
+
 
 // Read
 const getAllApprovedTeams = async () => {

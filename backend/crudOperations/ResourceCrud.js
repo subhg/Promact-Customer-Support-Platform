@@ -45,9 +45,18 @@ const deleteResource = async (resourceId) => {
   }
 };
 
+const getAllResource = async () => {
+  try {
+    const result = await Resource.find();
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
 module.exports = {
   createResource,
   getResourceById,
+  getAllResource,
   updateResource,
   deleteResource,
 };

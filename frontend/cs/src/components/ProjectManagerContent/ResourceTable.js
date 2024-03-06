@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'monday-ui-react-core';
+import './Table.css';
 
 const ResourceTable = () => {
   const [resources, setResources] = useState([]);
@@ -13,7 +14,7 @@ const ResourceTable = () => {
 
   const fetchResources = async () => {
     try {
-      const response = await fetch('http://localhost:3000/resources');
+      const response = await fetch('http://localhost:3000/resource');
       const data = await response.json();
       setResources(data);
     } catch (error) {
@@ -103,8 +104,8 @@ const ResourceTable = () => {
   return (
     <div>
       <h1>Resource Management</h1>
-      <table>
-        <thead>
+      <table className="table">
+        <thead className="header">
           <tr>
             <th>Name</th>
             <th>Role</th>
@@ -120,6 +121,7 @@ const ResourceTable = () => {
               <td>
                 {editingRows[resource._id] ? (
                   <input
+                    className="input"
                     type="text"
                     value={resource.name}
                     onChange={(e) => handleInputChange('name', e.target.value, resource._id)}
@@ -131,6 +133,7 @@ const ResourceTable = () => {
               <td>
                 {editingRows[resource._id] ? (
                   <input
+                    className="input"
                     type="text"
                     value={resource.role}
                     onChange={(e) => handleInputChange('role', e.target.value, resource._id)}
@@ -142,6 +145,7 @@ const ResourceTable = () => {
               <td>
                 {editingRows[resource._id] ? (
                   <input
+                    className="input"
                     type="text"
                     value={resource.startDate}
                     onChange={(e) => handleInputChange('startDate', e.target.value, resource._id)}
@@ -153,6 +157,7 @@ const ResourceTable = () => {
               <td>
                 {editingRows[resource._id] ? (
                   <input
+                    className="input"
                     type="text"
                     value={resource.endDate}
                     onChange={(e) => handleInputChange('endDate', e.target.value, resource._id)}
@@ -164,6 +169,7 @@ const ResourceTable = () => {
               <td>
                 {editingRows[resource._id] ? (
                   <input
+                    className="input"
                     type="text"
                     value={resource.comment}
                     onChange={(e) => handleInputChange('comment', e.target.value, resource._id)}
@@ -174,11 +180,11 @@ const ResourceTable = () => {
               </td>
               <td>
                 {editingRows[resource._id] ? (
-                  <Button onClick={() => handleUpdateResource(resource._id)}>Update</Button>
+                  <Button className="button" onClick={() => handleUpdateResource(resource._id)}>Update</Button>
                 ) : (
-                  <Button onClick={() => toggleEditing(resource._id)}>Update</Button>
+                  <Button className="button" onClick={() => toggleEditing(resource._id)}>Edit</Button>
                 )}
-                <Button onClick={() => handleDeleteResource(resource._id)}>Delete</Button>
+                <Button className="button" onClick={() => handleDeleteResource(resource._id)}>Delete</Button>
               </td>
             </tr>
           ))}
@@ -186,6 +192,7 @@ const ResourceTable = () => {
           <tr>
             <td>
               <input
+                className="input"
                 type="text"
                 value={newResource.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
@@ -193,6 +200,7 @@ const ResourceTable = () => {
             </td>
             <td>
               <input
+                className="input"
                 type="text"
                 value={newResource.role}
                 onChange={(e) => handleInputChange('role', e.target.value)}
@@ -200,6 +208,7 @@ const ResourceTable = () => {
             </td>
             <td>
               <input
+                className="input"
                 type="text"
                 value={newResource.startDate}
                 onChange={(e) => handleInputChange('startDate', e.target.value)}
@@ -207,6 +216,7 @@ const ResourceTable = () => {
             </td>
             <td>
               <input
+                className="input"
                 type="text"
                 value={newResource.endDate}
                 onChange={(e) => handleInputChange('endDate', e.target.value)}
@@ -214,13 +224,14 @@ const ResourceTable = () => {
             </td>
             <td>
               <input
+                className="input"
                 type="text"
                 value={newResource.comment}
                 onChange={(e) => handleInputChange('comment', e.target.value)}
               />
             </td>
             <td>
-              <Button onClick={handleAddResource}>Add Resource</Button>
+              <Button className="add-button" onClick={handleAddResource}>Add Resource</Button>
             </td>
           </tr>
         </tbody>

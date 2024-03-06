@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from 'monday-ui-react-core';
+import './Table.css'
 
 const ClientMeetingTable = () => {
   const [clientMeetings, setClientMeetings] = useState([]);
@@ -13,7 +14,7 @@ const ClientMeetingTable = () => {
 
   const fetchClientMeetings = async () => {
     try {
-      const response = await fetch('http://localhost:3000/clientMeetings');
+      const response = await fetch('http://localhost:3000/clientMeeting');
       const data = await response.json();
       setClientMeetings(data);
     } catch (error) {
@@ -102,9 +103,9 @@ const ClientMeetingTable = () => {
 
   return (
     <div>
-      <h1>Client Meeting Management</h1>
-      <table>
-        <thead>
+      <h1>Client Meeting </h1>
+      <table className='table'>
+        <thead className='header'>
           <tr>
             <th>Date</th>
             <th>Duration</th>
@@ -120,7 +121,8 @@ const ClientMeetingTable = () => {
               <td>
                 {editingRows[meeting._id] ? (
                   <input
-                    type="text"
+                  className='input'  
+                  type="text"
                     value={meeting.date}
                     onChange={(e) => handleInputChange('date', e.target.value, meeting._id)}
                   />
@@ -131,6 +133,7 @@ const ClientMeetingTable = () => {
               <td>
                 {editingRows[meeting._id] ? (
                   <input
+                    className="input" 
                     type="text"
                     value={meeting.duration}
                     onChange={(e) => handleInputChange('duration', e.target.value, meeting._id)}
@@ -142,6 +145,7 @@ const ClientMeetingTable = () => {
               <td>
                 {editingRows[meeting._id] ? (
                   <input
+                    className='input'
                     type="text"
                     value={meeting.momLink}
                     onChange={(e) => handleInputChange('momLink', e.target.value, meeting._id)}
@@ -153,6 +157,7 @@ const ClientMeetingTable = () => {
               <td>
                 {editingRows[meeting._id] ? (
                   <input
+                    className='input'
                     type="text"
                     value={meeting.comments}
                     onChange={(e) => handleInputChange('comments', e.target.value, meeting._id)}
@@ -164,6 +169,7 @@ const ClientMeetingTable = () => {
               <td>
                 {editingRows[meeting._id] ? (
                   <input
+                    className='input'
                     type="text"
                     value={meeting.project}
                     onChange={(e) => handleInputChange('project', e.target.value, meeting._id)}
@@ -174,11 +180,11 @@ const ClientMeetingTable = () => {
               </td>
               <td>
                 {editingRows[meeting._id] ? (
-                  <Button onClick={() => handleUpdateMeeting(meeting._id)}>Update</Button>
+                  <Button className='button' onClick={() => handleUpdateMeeting(meeting._id)}>Update</Button>
                 ) : (
-                  <Button onClick={() => toggleEditing(meeting._id)}>Update</Button>
+                  <Button className='button' onClick={() => toggleEditing(meeting._id)}>Edit</Button>
                 )}
-                <Button onClick={() => handleDeleteMeeting(meeting._id)}>Delete</Button>
+                <Button className='button' onClick={() => handleDeleteMeeting(meeting._id)}>Delete</Button>
               </td>
             </tr>
           ))}
@@ -186,6 +192,7 @@ const ClientMeetingTable = () => {
           <tr>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newMeeting.date}
                 onChange={(e) => handleInputChange('date', e.target.value)}
@@ -193,6 +200,7 @@ const ClientMeetingTable = () => {
             </td>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newMeeting.duration}
                 onChange={(e) => handleInputChange('duration', e.target.value)}
@@ -200,6 +208,7 @@ const ClientMeetingTable = () => {
             </td>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newMeeting.momLink}
                 onChange={(e) => handleInputChange('momLink', e.target.value)}
@@ -207,6 +216,7 @@ const ClientMeetingTable = () => {
             </td>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newMeeting.comments}
                 onChange={(e) => handleInputChange('comments', e.target.value)}
@@ -214,13 +224,14 @@ const ClientMeetingTable = () => {
             </td>
             <td>
               <input
+                className='input'
                 type="text"
                 value={newMeeting.project}
                 onChange={(e) => handleInputChange('project', e.target.value)}
               />
             </td>
             <td>
-              <Button onClick={handleAddMeeting}>Add Meeting</Button>
+              <Button className='add-button' onClick={handleAddMeeting}>Add Meeting</Button>
             </td>
           </tr>
         </tbody>

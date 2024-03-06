@@ -25,8 +25,7 @@ const clientFeedbackSchema = new Schema({
     type: Date
   },
   project: {
-    type: Schema.Types.ObjectId,
-    ref: 'Project',
+    type: String,
     required: true
     // Assuming you have a Project model and you want to associate the feedback with a specific project
   }

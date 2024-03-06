@@ -26,6 +26,7 @@ const {
 const {
   createResource,
   getResourceById,
+  getAllResource,
   updateResource,
   deleteResource,
 } = require('./crudOperations/ResourceCrud');
@@ -33,6 +34,7 @@ const {
 const {
   createClientFeedback,
   getClientFeedbackById,
+  getAllClientFeedback,
   updateClientFeedback,
   deleteClientFeedback,
 } = require('./crudOperations/ClientFeedbackCrud');
@@ -40,6 +42,7 @@ const {
 const {
   createProjectUpdate,
   getProjectUpdateById,
+  getAllProjectUpdate,
   updateProjectUpdate,
   deleteProjectUpdate,
 } = require('./crudOperations/ProjectUpdateCrud');
@@ -47,6 +50,7 @@ const {
 const {
   createClientMeeting,
   getClientMeetingById,
+  getAllClientMeeting,
   updateClientMeeting,
   deleteClientMeeting,
 } = require('./crudOperations/ClientMeetingCrud');
@@ -91,7 +95,7 @@ app.get('/approvedTeam/:id', async (req, res) => {
   }
 });
 
-app.get('/approvedTeam/', async (req, res) => {
+app.get('/approvedTeam', async (req, res) => {
   try {
     const result = await getAllApprovedTeams();
     res.json(result);
@@ -128,6 +132,15 @@ app.post('/resource', async (req, res) => {
   }
 });
 
+app.get('/resource', async (req, res) => {
+  try {
+    const result = await getAllResource();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get('/resource/:id', async (req, res) => {
   try {
     const result = await getResourceById(req.params.id);
@@ -136,6 +149,7 @@ app.get('/resource/:id', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 app.put('/resource/:id', async (req, res) => {
   try {
@@ -168,6 +182,15 @@ app.post('/clientFeedback', async (req, res) => {
 app.get('/clientFeedback/:id', async (req, res) => {
   try {
     const result = await getClientFeedbackById(req.params.id);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/clientFeedback', async (req, res) => {
+  try {
+    const result = await getAllClientFeedback();
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -211,6 +234,15 @@ app.get('/projectUpdate/:id', async (req, res) => {
   }
 });
 
+app.get('/projectUpdate', async (req, res) => {
+  try {
+    const result = await getAllProjectUpdate();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.put('/projectUpdate/:id', async (req, res) => {
   try {
     const result = await updateProjectUpdate(req.params.id, req.body);
@@ -242,6 +274,15 @@ app.post('/clientMeeting', async (req, res) => {
 app.get('/clientMeeting/:id', async (req, res) => {
   try {
     const result = await getClientMeetingById(req.params.id);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/clientMeeting', async (req, res) => {
+  try {
+    const result = await getAllClientMeeting();
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });

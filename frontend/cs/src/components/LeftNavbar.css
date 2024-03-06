@@ -1,43 +1,40 @@
 .left-navbar {
-    width: 200px;
-    background-color: #fff;
-    border:1px solid grey;
-    padding: 20px;
-    height:100vh;
-    
+  width: 200px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 20px;
+  height: auto;
+  font-family: 'Arial', sans-serif;
+}
 
-  }
-  
-  .left-navbar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .left-navbar li {
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    padding: 10px 100px 10px 10px;
-    text-align: left;
+.left-navbar ul {
+  list-style: none;
+  padding: 0;
+}
 
+.left-navbar li {
+  margin-bottom: 10px;
+  padding: 10px;
+  text-align: left;
+  transition: background-color 0.3s ease;
+  
+}
 
-  }
-  
-  .left-navbar a {
-    text-decoration: none;
-    color: black;
-    
-  }
-  .left-navbar li:hover {
-    background-color: rgb(144, 144, 144);
-    border-radius: 2px;
-  }
- 
-  .add{
-    background-color: rgba(38, 112, 144, 0.199);
-    color:black;
-  }
-  
-  .projectmanager{
-    width: 800px;
-    position: right;
-  }
+.left-navbar a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 20px;
+
+}
+
+.left-navbar li:hover {
+  background-color: #ddd;
+  border-radius: 2px;
+}
+
+.add {
+  background-color: rgba(38, 112, 144, 0.1);
+  color: #265c90;
+}
+
