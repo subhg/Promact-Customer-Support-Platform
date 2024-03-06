@@ -2,10 +2,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
 
+app.use(cors());
 
 
 
@@ -16,6 +18,7 @@ app.use(bodyParser.json());
 const {
   createApprovedTeam,
   getApprovedTeamById,
+  getAllApprovedTeams,
   updateApprovedTeam,
   deleteApprovedTeam,
 } = require('./crudOperations/ApprovedTeamCrud');
@@ -71,7 +74,10 @@ app.post('/approvedTeam', async (req, res) => {
   try {
     const result = await createApprovedTeam(req.body);  
     res.json(result);
-  } catch (error) {
+   // console.log('Received Data:', req.body);
+  } 
+
+  catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
@@ -79,6 +85,15 @@ app.post('/approvedTeam', async (req, res) => {
 app.get('/approvedTeam/:id', async (req, res) => {
   try {
     const result = await getApprovedTeamById(req.params.id);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/approvedTeam/', async (req, res) => {
+  try {
+    const result = await getAllApprovedTeams();
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });

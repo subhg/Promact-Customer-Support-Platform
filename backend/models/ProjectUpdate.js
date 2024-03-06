@@ -15,10 +15,9 @@ const projectUpdateSchema = new Schema({
     required: true
   },
   project: {
-    type: Schema.Types.ObjectId,
-    ref: 'Project',
+    type: String,
     required: true
-    // Assuming you have a Project model and you want to associate the update with a specific project
+    
   }
 });
 

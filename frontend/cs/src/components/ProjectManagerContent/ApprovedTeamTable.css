@@ -1,0 +1,25 @@
+/* CSS for Approved Team Table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  thead th, tbody td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  thead th {
+    background-color: #f2f2f2;
+  }
+  
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  button {
+    margin: 5px;
+  }
+  

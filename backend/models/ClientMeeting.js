@@ -22,10 +22,8 @@ const clientMeetingSchema = new Schema({
     type: String
   },
   project: {
-    type: Schema.Types.ObjectId,
-    ref: 'Project',
+    type: String,
     required: true
-    // Assuming you have a Project model and you want to associate the meeting with a specific project
   }
 });
 

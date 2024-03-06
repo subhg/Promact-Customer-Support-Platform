@@ -3,8 +3,8 @@
     background-color: #fff;
     border:1px solid grey;
     padding: 20px;
-    height:100%;
-    position: absolute;
+    height:100vh;
+    
 
   }
   
@@ -31,6 +31,13 @@
     background-color: rgb(144, 144, 144);
     border-radius: 2px;
   }
-
+ 
+  .add{
+    background-color: rgba(38, 112, 144, 0.199);
+    color:black;
+  }
   
-  
+  .projectmanager{
+    width: 800px;
+    position: right;
+  }

@@ -1,24 +1,40 @@
 // Navbar.js
-import './Navbar.css'
+import './Navbar.css';
 import React from 'react';
-import logoImage from '../../src/logoImage.png'; // Assuming CS.jpg is in the src directory
+import { useAuth0 } from '@auth0/auth0-react';
+import logoImage from '../../src/logoImage.png';
+import Login from './auth0/Login';
+import Profile from './auth0/Profile';
+import LogoutButton from './auth0/LogoutButton';
+
+
+import { Search } from "monday-ui-react-core";
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth0();
+
   return (
     <nav className="navbar">
       <div className="logo-container">
-       <img src={logoImage} alt="Logo" className="logo" />
+        <img src={logoImage} alt="Logo" className="logo" />
       </div>
       <div className="customer-support">
         <div className="customer">Customer</div>
         <div className="support">Support</div>
       </div>
       <div className="search-bar">
-        <input type="text" placeholder="Search..." />
+      <Search placeholder="Search" size={Search.sizes.LARGE} />
       </div>
-      <div className="login-button">
-        <button>Login</button>
-      </div>
+      {isAuthenticated ? (
+        // If user is authenticated, show the profile and logout button
+        <div className="profile-container">
+          <Profile />
+          <LogoutButton className="logout-button" />
+        </div>
+      ) : (
+        // If user is not authenticated, show the login button
+        <Login />
+      )}
     </nav>
   );
 };

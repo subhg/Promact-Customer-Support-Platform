@@ -7,13 +7,14 @@ const LeftNavbar = () => {
     <div className="left-navbar">
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <Link  className="newproject"to="/NewProject">
+            New Project</Link>
         </li>
         <li>
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/Project">Project </Link>
         </li>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link className="projectmanager"to="/ProjectManager">Project Manager</Link>
         </li>
         {/* Add more links as needed */}
       </ul>

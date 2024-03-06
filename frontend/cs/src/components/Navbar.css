@@ -35,8 +35,9 @@
     border-radius:5px;
   }
   
-  .login-button button {
+  .login-button button,.logout-button button {
     padding: 8px 16px;
+    margin-left:16px;
     background-color: #4caf50;
     color: white;
     border: none;
