@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { Auth0Provider } from '@auth0/auth0-react';
 import reportWebVitals from './reportWebVitals';
+//import AdminDashboard from './Pages/AdminPage/AdminDashboard';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,7 @@ root.render(
          redirect_uri: window.location.origin
       }}
     >
-      <App />
+      <App/>
     </Auth0Provider>
   </React.StrictMode>
 );

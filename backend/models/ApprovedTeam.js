@@ -34,5 +34,4 @@ const approvedTeamSchema = new Schema({
 
 // Create the ApprovedTeam model
 const ApprovedTeam = mongoose.model('ApprovedTeam', approvedTeamSchema);
-
 module.exports = ApprovedTeam;

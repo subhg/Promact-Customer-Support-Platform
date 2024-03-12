@@ -22,6 +22,9 @@ const LeftNavbar = () => {
         <li>
           <Link to="/Client">Client</Link>
         </li>
+        <li>
+          <Link to="/Admin">Admin</Link>
+        </li>
       </ul>
     </div>
   );
