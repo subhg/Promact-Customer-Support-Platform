@@ -1,26 +1,47 @@
-// ClientMeetingTable.js
-
 import React, { useEffect, useState } from 'react';
-import { Button } from 'monday-ui-react-core';
+import { useAuth0 } from '@auth0/auth0-react';
 import './Table.css';
 
-/**
- * ClientMeetingTable component manages the display and management of client meetings.
- */
 const ClientMeetingTable = () => {
-  // State to manage client meeting data
+  const { isAuthenticated, user } = useAuth0();
+  const [userRole, setUserRole] = useState('');
   const [clientMeetings, setClientMeetings] = useState([]);
-  // State to manage the data for a new meeting
   const [newMeeting, setNewMeeting] = useState({ date: '', duration: '', momLink: '', comments: '', project: '' });
-  // State to manage the editing state of each row
   const [editingRows, setEditingRows] = useState({});
 
-  // Fetch client meeting data when the component mounts
+  useEffect(() => {
+    if (isAuthenticated && user && user.email) {
+      // Fetch user role based on user email
+      const fetchUserRole = async () => {
+        try {
+          const response = await fetch('http://localhost:3000/verify-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: user.email }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to verify email');
+          }
+
+          const data = await response.json();
+          const { role } = data;
+          setUserRole(role);
+        } catch (error) {
+          console.error('Error fetching user role:', error);
+        }
+      };
+
+      fetchUserRole();
+    }
+  }, [isAuthenticated, user]);
+
   useEffect(() => {
     fetchClientMeetings();
   }, []);
 
-  // Fetch client meeting data from the server
   const fetchClientMeetings = async () => {
     try {
       const response = await fetch('http://localhost:3000/clientMeeting');
@@ -31,9 +52,7 @@ const ClientMeetingTable = () => {
     }
   };
 
-  // Handle input change for each cell in the table
   const handleInputChange = (key, value, meetingId) => {
-    // Update the newMeeting state with the modified value
     if (meetingId) {
       setClientMeetings((prevMeetings) =>
         prevMeetings.map((meeting) =>
@@ -45,7 +64,6 @@ const ClientMeetingTable = () => {
     }
   };
 
-  // Handle adding a new meeting
   const handleAddMeeting = async () => {
     try {
       const response = await fetch('http://localhost:3000/clientMeeting', {
@@ -59,17 +77,13 @@ const ClientMeetingTable = () => {
       const addedMeeting = await response.json();
       console.log('Client meeting added successfully:', addedMeeting);
 
-      // Update the state after adding
       setClientMeetings([...clientMeetings, addedMeeting]);
-
-      // Clear input fields
       setNewMeeting({ date: '', duration: '', momLink: '', comments: '', project: '' });
     } catch (error) {
       console.error('Error adding client meeting:', error);
     }
   };
 
-  // Handle updating an existing meeting
   const handleUpdateMeeting = async (id) => {
     try {
       const updatedMeeting = clientMeetings.find((meeting) => meeting._id === id);
@@ -85,14 +99,12 @@ const ClientMeetingTable = () => {
       const updatedResult = await response.json();
       console.log('Client meeting updated successfully:', updatedResult);
 
-      // Disable editing after saving
       setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: false }));
     } catch (error) {
       console.error('Error updating client meeting:', error);
     }
   };
 
-  // Handle deleting an existing meeting
   const handleDeleteMeeting = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/clientMeeting/${id}`, {
@@ -102,7 +114,6 @@ const ClientMeetingTable = () => {
       const deletedResult = await response.json();
       console.log('Client meeting deleted successfully:', deletedResult);
 
-      // Update the state after deletion
       const updatedMeetings = clientMeetings.filter((meeting) => meeting._id !== id);
       setClientMeetings(updatedMeetings);
     } catch (error) {
@@ -110,17 +121,14 @@ const ClientMeetingTable = () => {
     }
   };
 
-  // Toggle editing state for a row
   const toggleEditing = (id) => {
     setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
 
   return (
     <div>
-      <h1>Client Meeting </h1>
-      {/* Table for displaying client meetings */}
+      <h1>Client Meeting</h1>
       <table className='table'>
-        {/* Table header */}
         <thead className='header'>
           <tr>
             <th>Date</th>
@@ -128,20 +136,17 @@ const ClientMeetingTable = () => {
             <th>MOM Link</th>
             <th>Comments</th>
             <th>Project</th>
-            <th>Action</th>
+            {(userRole === 'admin' || userRole === 'project manager') && <th>Action</th>}
           </tr>
         </thead>
-        {/* Table body */}
         <tbody>
-          {/* Map through client meetings to generate rows */}
           {clientMeetings.map((meeting) => (
             <tr key={meeting._id}>
-              {/* Display cells with input fields when editing */}
               <td>
                 {editingRows[meeting._id] ? (
                   <input
-                    className='input'  
-                    type="text"
+                    className='input'
+                    type="date"
                     value={meeting.date}
                     onChange={(e) => handleInputChange('date', e.target.value, meeting._id)}
                   />
@@ -197,24 +202,21 @@ const ClientMeetingTable = () => {
                   meeting.project
                 )}
               </td>
-              {/* Display action buttons for each row */}
               <td>
-                {editingRows[meeting._id] ? (
-                  <Button className='button' onClick={() => handleUpdateMeeting(meeting._id)}>Update</Button>
+                {(userRole === 'admin' || userRole === 'project manager') && editingRows[meeting._id] ? (
+                  <button className='button' onClick={() => handleUpdateMeeting(meeting._id)}>Update</button>
                 ) : (
-                  <Button className='button' onClick={() => toggleEditing(meeting._id)}>Edit</Button>
+                  (userRole === 'admin' || userRole === 'project manager') && <button className='button' onClick={() => toggleEditing(meeting._id)}>Edit</button>
                 )}
-                <Button className='button' onClick={() => handleDeleteMeeting(meeting._id)}>Delete</Button>
+                {(userRole === 'admin' || userRole === 'project manager') && <button className='button' onClick={() => handleDeleteMeeting(meeting._id)}>Delete</button>}
               </td>
             </tr>
           ))}
-          {/* New Meeting Row */}
           <tr>
-            {/* Display input fields for each cell in the new meeting row */}
             <td>
               <input
                 className='input'
-                type="text"
+                type="date"
                 value={newMeeting.date}
                 onChange={(e) => handleInputChange('date', e.target.value)}
               />
@@ -251,9 +253,8 @@ const ClientMeetingTable = () => {
                 onChange={(e) => handleInputChange('project', e.target.value)}
               />
             </td>
-            {/* Display button for adding a new meeting */}
             <td>
-              <Button className='add-button' onClick={handleAddMeeting}>Add Meeting</Button>
+              {(userRole === 'admin' || userRole === 'project manager') && <button className='button' onClick={handleAddMeeting}>Add Meeting</button>}
             </td>
           </tr>
         </tbody>

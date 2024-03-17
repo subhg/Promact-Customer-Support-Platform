@@ -1,32 +1,59 @@
-// LeftNavbar.js
+import React, { useEffect, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
+import AuditorLeftNavbar from './AuditorContent/AuditorLeftNavbar';
+import AdminLeftNavbar from './AdminContent/AdminLeftNavbar';
+import ProjectManagerLeftNavbar from './ProjectManagerContent/ProjectManagerLeftNavbar'
+import ClientLeftNavbar from './ClientContent/ClientleftNavbar';
+// Import other role-specific left navbar components if needed
 
-import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom if you're using routing
-import './LeftNavbar.css';
-
-/**
- * LeftNavbar component represents the left navigation bar.
- * It contains links to different sections of the application.
- */
 const LeftNavbar = () => {
+  const { isAuthenticated, user } = useAuth0();
+  const [userRole, setUserRole] = useState(null); // State to store user role
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (isAuthenticated && user && user.email) {
+        try {
+          // Fetch user role based on user email
+          const response = await fetch('http://localhost:3000/verify-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: user.email }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to verify email');
+          }
+
+          const data = await response.json();
+          const { role } = data;
+
+          setUserRole(role); // Set user role in state
+        } catch (error) {
+          console.error('Error verifying email:', error);
+        }
+      }
+    };
+
+    fetchUserRole();
+  }, [isAuthenticated, user]);
+
   return (
-    <div className="left-navbar">
-      <ul>
-        {/* Project Manager link */}
-        <li>
-          <Link className="projectmanager" to="/ProjectManager">
-            Project Manager
-          </Link>
-        </li>
-        {/* Client link */}
-        <li>
-          <Link to="/Client">Client</Link>
-        </li>
-        <li>
-          <Link to="/Admin">Admin</Link>
-        </li>
-      </ul>
-    </div>
+    <>
+      {isAuthenticated && userRole && (
+        <>
+          {/* Render role-specific left navbar based on user role */}
+          {userRole === 'auditor' && <AuditorLeftNavbar />}
+          {userRole === 'admin' && <AdminLeftNavbar />}
+          {userRole==='project manager'&& <ProjectManagerLeftNavbar/>}
+          {userRole==='client'&& <ClientLeftNavbar/>}
+
+          {/* Add other role-specific left navbar components here */}
+        </>
+      )}
+    </>
   );
 };
 

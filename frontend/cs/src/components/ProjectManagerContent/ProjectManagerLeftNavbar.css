@@ -1,0 +1,53 @@
+/* Project Manager Left Navbar Styles */
+
+/* Styling for the left navigation bar */
+.project-manager-left-navbar {
+    width: 200px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 20px;
+    height: auto;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Styles for the unordered list inside the left navigation bar */
+.project-manager-left-navbar ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Styles for list items inside the left navigation bar */
+.project-manager-left-navbar li {
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+/* Styles for hyperlinks within list items */
+.project-manager-left-navbar a {
+    text-decoration: none;
+    color: #181111;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* Hover effect for list items in the left navigation bar */
+.project-manager-left-navbar li:hover {
+    background-color: #ddd;
+    border-radius: 2px;
+}
+
+/* Additional styling for a specific class 'add' */
+.project-manager-left-navbar .add {
+    background-color: rgba(38, 112, 144, 0.1);
+    color: #265c90;
+}
+
+/* Background color for the first list item */
+.project-manager-left-navbar ul li:first-child {
+    background-color: #ccc; /* Adjust as needed */
+    border-radius: 5px;
+}
+
+/* End of Project Manager Left Navbar Styles */

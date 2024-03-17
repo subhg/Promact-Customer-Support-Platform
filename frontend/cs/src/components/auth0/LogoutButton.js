@@ -2,7 +2,7 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-import { Button } from "monday-ui-react-core";
+//import { Button } from "monday-ui-react-core";
 
 /**
  * LogoutButton component renders a button that triggers Auth0 logout with redirect
@@ -15,9 +15,9 @@ const LogoutButton = () => {
   return (
     // Render a button that triggers logout with redirect on click
     <div className="logout-button">
-      <Button onClick={() => logout({ returnTo: window.location.origin })}>
+      <button onClick={() => logout({ returnTo: window.location.origin })}>
         Log Out
-      </Button>
+      </button>
     </div>
   );
 };

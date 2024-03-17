@@ -74,7 +74,25 @@ const getAllUser = async () => {
     }
   };
   
+  const getUserRoleById = async (userId) => {
+    try {
+      // Find the user by their ID in the database
+      const user = await User.findById(userId);
+  
+      // If user is found, return their role
+      if (user) {
+        return user.role;
+      } else {
+        // If user is not found, return null or throw an error, depending on your preference
+        return null;
+      }
+    } catch (error) {
+      // Handle any errors that occur during the retrieval process
+      throw error;
+    }
+  };
   module.exports={
     createUser,
     getAllUser,
+    getUserRoleById,
   };

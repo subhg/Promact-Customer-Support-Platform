@@ -1,11 +1,19 @@
 const EscalationMatrix = require('../models/EscalationMatrix');
+const { Types } = require('mongoose');
+
 
 // Create
-const createEscalationMatrix = async (data) => {
+const createEscalationLevel = async (type, data) => {
   try {
-    // Create a new instance of EscalationMatrix using the provided data
-    const escalationMatrix = new EscalationMatrix(data);
-    // Save the new instance to the database
+    // Find the EscalationMatrix document
+    let escalationMatrix = await EscalationMatrix.findOne();
+    // If no document exists, create a new one
+    if (!escalationMatrix) {
+      escalationMatrix = new EscalationMatrix();
+    }
+    // Add the new escalation level to the appropriate type
+    escalationMatrix[type].push(data);
+    // Save the changes
     const result = await escalationMatrix.save();
     return result;
   } catch (error) {
@@ -15,50 +23,60 @@ const createEscalationMatrix = async (data) => {
 };
 
 // Read
-const getEscalationMatrixById = async (escalationMatrixId) => {
+const getEscalationLevelsByType = async (type) => {
   try {
-    // Retrieve a specific escalation matrix by its ID from the database
-    const result = await EscalationMatrix.findById(escalationMatrixId);
-    return result;
+    // Find the EscalationMatrix document
+    const escalationMatrix = await EscalationMatrix.findOne();
+    // Return the escalation levels of the specified type
+    return escalationMatrix[type];
   } catch (error) {
     // Handle any errors that occur during the retrieval process
     throw error;
   }
 };
 
-// Read all escalation matrices
-const getAllEscalationMatrices = async () => {
+const updateEscalationLevel = async (type, levelId, newData) => {
   try {
-    // Retrieve all escalation matrices from the database
-    const result = await EscalationMatrix.find();
-    return result;
-  } catch (error) {
-    // Handle any errors that occur during the retrieval process
-    throw error;
-  }
-};
+    // Find the EscalationMatrix document
+    console.log(type)
+    console.log(levelId)
+    let escalationMatrix = await EscalationMatrix.findOne();
 
-// Update escalation matrix by ID with new data
-const updateEscalationMatrix = async (escalationMatrixId, newData) => {
-  try {
-    // Find and update the escalation matrix by its ID with the new data
-    const result = await EscalationMatrix.findByIdAndUpdate(
-      escalationMatrixId,
-      { $set: newData },
-      { new: true }
-    );
-    return result;
+    // Log the escalationMatrix before updating
+    console.log('Escalation Matrix before update:', escalationMatrix);
+
+    // Find the index of the level to update
+    const index = escalationMatrix[type].findIndex(level => level._id.toString() === levelId);
+    // console.log("TYPE eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeOF ",typeof(index))
+    // Log the index value for debugging
+    console.log('Index:', index);
+
+    if (index !== -1) {
+      // Update the level with the new data
+      escalationMatrix[type][index].escalationLevel = newData.escalationLevel;
+      escalationMatrix[type][index].name = newData.name;
+
+      // Save the changes
+      escalationMatrix = await escalationMatrix.save();
+      return escalationMatrix; // Return the updated document
+    } else {
+      throw new Error('Escalation level not found');
+    }
   } catch (error) {
     // Handle any errors that occur during the update process
     throw error;
   }
 };
 
-// Delete escalation matrix by ID
-const deleteEscalationMatrix = async (escalationMatrixId) => {
+// Delete
+const deleteEscalationLevel = async (type, levelId) => {
   try {
-    // Find and delete the escalation matrix by its ID
-    const result = await EscalationMatrix.findByIdAndDelete(escalationMatrixId);
+    // Find the EscalationMatrix document
+    const escalationMatrix = await EscalationMatrix.findOne();
+    // Remove the level from the specified type
+    escalationMatrix[type] = escalationMatrix[type].filter(level => level._id !== levelId);
+    // Save the changes
+    const result = await escalationMatrix.save();
     return result;
   } catch (error) {
     // Handle any errors that occur during the deletion process
@@ -68,9 +86,8 @@ const deleteEscalationMatrix = async (escalationMatrixId) => {
 
 // Export functions for external use
 module.exports = {
-  createEscalationMatrix,
-  getEscalationMatrixById,
-  getAllEscalationMatrices,
-  updateEscalationMatrix,
-  deleteEscalationMatrix,
+  createEscalationLevel,
+  getEscalationLevelsByType,
+  updateEscalationLevel,
+  deleteEscalationLevel,
 };

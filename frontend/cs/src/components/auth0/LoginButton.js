@@ -2,7 +2,7 @@
 
 import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
-import { Button } from "monday-ui-react-core";
+//import { Button } from "monday-ui-react-core";
 
 /**
  * LoginButton component renders a button that triggers Auth0 login with redirect
@@ -14,7 +14,7 @@ const LoginButton = () => {
 
   return (
     // Render a button that triggers loginWithRedirect on click
-    <Button onClick={() => loginWithRedirect()}>Login</Button>
+    <button onClick={() => loginWithRedirect()}>Login</button>
   );
 };
 

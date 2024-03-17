@@ -11,8 +11,12 @@ const {
 
 router.post('/', async (req, res) => {
   try {
+    console.log('hey')
+    console.log('req.body:',req.body)
     const result = await createScope(req.body);
+    
     res.json(result);
+    console.log(result)
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

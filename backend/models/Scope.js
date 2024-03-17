@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 // Define the schema for the scope collection
 const scopeSchema = new mongoose.Schema({
-  link: {
+  description: {
     type: String,
     required: true
   },

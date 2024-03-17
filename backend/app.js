@@ -18,6 +18,18 @@ const projectDescriptionRoutes = require('./Routes/projectDescriptionRoutes');
 const scopeRoutes = require('./Routes/scopeRoutes');
 const projectStackRoutes = require('./Routes/projectStackRoutes');
 const escalationMatrixRoutes = require('./Routes/escalationMatrixRoutes');
+const stakeholderRoutes = require('./Routes/stakeholderRoutes');
+const riskProfilingRoutes = require('./Routes/riskProfilingRoutes');
+const phasesRoutes = require('./Routes/phasesRoutes');
+const sprintRoutes = require('./Routes/sprintRoutes');
+const timelineRoutes = require('./Routes/timelineRoutes');
+const auditorProjectFormRoutes = require('./Routes/auditorProjectFormRoutes');
+const allProjectRoutes = require('./Routes/allProjectRoutes');
+
+
+
+
+
 
 
 
@@ -34,6 +46,10 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3001',
+  credentials: true
+}));
 
 
 
@@ -49,6 +65,18 @@ app.use('/projectDescription', projectDescriptionRoutes);
 app.use('/scope', scopeRoutes);
 app.use('/projectStacks', projectStackRoutes);
 app.use('/escalationMatrix', escalationMatrixRoutes);
+app.use('/stakeholders',stakeholderRoutes);
+app.use('/riskProfiling', riskProfilingRoutes);
+app.use('/phases', phasesRoutes);
+app.use('/sprint', sprintRoutes);
+app.use('/timeline', timelineRoutes);
+app.use('/auditorProjectForm', auditorProjectFormRoutes);
+app.use('/projects', allProjectRoutes);
+
+
+
+
+
 
 
 app.use('/user',userRoutes)
@@ -72,6 +100,7 @@ app.post('/verify-email', async (req, res) => {
   console.log("Received request:", req.body);
   try {
     const { email } = req.body;
+    console.log('verify-email',req.body)
     const user = await UserModel.findOne({ email });
     if (user) {
       res.json({ exists: true, role: user.role });
@@ -81,6 +110,26 @@ app.post('/verify-email', async (req, res) => {
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
+
+// Define route to get user role by email
+app.post('/user-role', async (req, res) => {
+  try {
+    console.log('userrole',req.body)
+    const { email } = req.body; // Get the email from the query parameters
+    const user = await UserModel.findOne({ email }); // Find the user by email
+    if (user) {
+      res.json({ role: user.role }); // Respond with the user's role
+    } else {
+      res.status(404).json({ error: 'User not found' }); // User not found error
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' }); // Internal server error
   }
 });
 

@@ -7,11 +7,11 @@ const projectBudgetSchema = new Schema({
     required: true,
   },
   durationMonths: {
-    type: Number,
+    type: String,
     required: true,
   },
   budgetedHours: {
-    type: Number,
+    type: String,
     required: true,
   },
 });

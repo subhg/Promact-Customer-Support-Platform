@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
-    "monday-ui-react-core": "^2.93.0"
+    "monday-ui-react-core": "^2.93.0",
+    "react-scrollable-tabs": "^1.0.1"
   }
 }

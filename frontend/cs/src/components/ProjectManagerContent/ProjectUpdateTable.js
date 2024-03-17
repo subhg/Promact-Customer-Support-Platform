@@ -1,26 +1,46 @@
-// ProjectUpdateTable.js
-
 import React, { useEffect, useState } from 'react';
-import { Button } from 'monday-ui-react-core';
-import './Table.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
-/**
- * ProjectUpdateTable component manages the display and management of project updates.
- */
 const ProjectUpdateTable = () => {
-  // State to manage project update data
+  const { isAuthenticated, user } = useAuth0();
+  const [userRole, setUserRole] = useState(null);
   const [projectUpdates, setProjectUpdates] = useState([]);
-  // State to manage the data for a new project update
   const [newUpdate, setNewUpdate] = useState({ date: '', generalUpdates: '', project: '' });
-  // State to manage the editing state of each row
   const [editingRows, setEditingRows] = useState({});
 
-  // Fetch project update data when the component mounts
+  useEffect(() => {
+    if (isAuthenticated && user && user.email) {
+      // Fetch user role based on user email
+      const fetchUserRole = async () => {
+        try {
+          const response = await fetch('http://localhost:3000/verify-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: user.email }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to verify email');
+          }
+
+          const data = await response.json();
+          const { role } = data;
+          setUserRole(role);
+        } catch (error) {
+          console.error('Error fetching user role:', error);
+        }
+      };
+
+      fetchUserRole();
+    }
+  }, [isAuthenticated, user]);
+
   useEffect(() => {
     fetchProjectUpdates();
   }, []);
 
-  // Fetch project update data from the server
   const fetchProjectUpdates = async () => {
     try {
       const response = await fetch('http://localhost:3000/projectUpdate');
@@ -31,35 +51,29 @@ const ProjectUpdateTable = () => {
     }
   };
 
-  // Handle input change for each cell in the table
   const handleInputChange = (key, value, updateId) => {
-    // Update the newUpdate state with the modified value
     if (updateId) {
-      setProjectUpdates((prevUpdates) =>
-        prevUpdates.map((update) =>
+      setProjectUpdates(prevUpdates =>
+        prevUpdates.map(update =>
           update._id === updateId ? { ...update, [key]: value } : update
         )
       );
     } else {
-      setNewUpdate((prevNewUpdate) => ({ ...prevNewUpdate, [key]: value }));
+      setNewUpdate(prevNewUpdate => ({ ...prevNewUpdate, [key]: value }));
     }
   };
 
-  // Handle adding a new project update
   const handleAddUpdate = async () => {
     try {
-      // Convert the date string to a Date object
       const dateObject = new Date(newUpdate.date);
-  
-      // Check if the date is valid
+
       if (isNaN(dateObject.getTime())) {
         console.error('Invalid date format');
         return;
       }
-  
-      // Update the newUpdate state with the valid date object
-      setNewUpdate((prevNewUpdate) => ({ ...prevNewUpdate, date: dateObject }));
-  
+
+      setNewUpdate(prevNewUpdate => ({ ...prevNewUpdate, date: dateObject }));
+
       const response = await fetch('http://localhost:3000/projectUpdate', {
         method: 'POST',
         headers: {
@@ -67,24 +81,20 @@ const ProjectUpdateTable = () => {
         },
         body: JSON.stringify(newUpdate),
       });
-  
+
       const addedUpdate = await response.json();
       console.log('Project update added successfully:', addedUpdate);
-  
-      // Update the state after adding
+
       setProjectUpdates([...projectUpdates, addedUpdate]);
-  
-      // Clear input fields
       setNewUpdate({ date: '', generalUpdates: '', project: '' });
     } catch (error) {
       console.error('Error adding project update:', error);
     }
   };
-  
-  // Handle updating an existing project update
+
   const handleUpdateUpdate = async (id) => {
     try {
-      const updatedUpdate = projectUpdates.find((update) => update._id === id);
+      const updatedUpdate = projectUpdates.find(update => update._id === id);
 
       const response = await fetch(`http://localhost:3000/projectUpdate/${id}`, {
         method: 'PUT',
@@ -97,14 +107,12 @@ const ProjectUpdateTable = () => {
       const updatedResult = await response.json();
       console.log('Project update updated successfully:', updatedResult);
 
-      // Disable editing after saving
-      setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: false }));
+      setEditingRows(prevEditingRows => ({ ...prevEditingRows, [id]: false }));
     } catch (error) {
       console.error('Error updating project update:', error);
     }
   };
 
-  // Handle deleting an existing project update
   const handleDeleteUpdate = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/projectUpdate/${id}`, {
@@ -114,39 +122,32 @@ const ProjectUpdateTable = () => {
       const deletedResult = await response.json();
       console.log('Project update deleted successfully:', deletedResult);
 
-      // Update the state after deletion
-      const updatedUpdates = projectUpdates.filter((update) => update._id !== id);
+      const updatedUpdates = projectUpdates.filter(update => update._id !== id);
       setProjectUpdates(updatedUpdates);
     } catch (error) {
       console.error('Error deleting project update:', error);
     }
   };
 
-  // Toggle editing state for a row
   const toggleEditing = (id) => {
-    setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
+    setEditingRows(prevEditingRows => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
 
   return (
     <div>
       <h1>Project Updates</h1>
-      {/* Table for displaying project updates */}
       <table className='table'>
-        {/* Table header */}
         <thead className='header'>
           <tr>
             <th>Date</th>
             <th>General Updates</th>
             <th>Project</th>
-            <th>Action</th>
+            {userRole === 'admin' || userRole === 'project manager' ? <th>Action</th> : null}
           </tr>
         </thead>
-        {/* Table body */}
         <tbody>
-          {/* Map through project updates to generate rows */}
-          {projectUpdates.map((update) => (
+          {projectUpdates.map(update => (
             <tr key={update._id}>
-              {/* Display cells with input fields when editing */}
               <td>
                 {editingRows[update._id] ? (
                   <input
@@ -183,20 +184,19 @@ const ProjectUpdateTable = () => {
                   update.project
                 )}
               </td>
-              {/* Display action buttons for each row */}
-              <td>
-                {editingRows[update._id] ? (
-                  <Button className="button" onClick={() => handleUpdateUpdate(update._id)}>Update</Button>
-                ) : (
-                  <Button className="button" onClick={() => toggleEditing(update._id)}>Edit</Button>
-                )}
-                <Button className="button" onClick={() => handleDeleteUpdate(update._id)}>Delete</Button>
-              </td>
+              {userRole === 'admin' || userRole === 'project manager' ? (
+                <td>
+                  {editingRows[update._id] ? (
+                    <button className="button" onClick={() => handleUpdateUpdate(update._id)}>Update</button>
+                  ) : (
+                    <button className="button" onClick={() => toggleEditing(update._id)}>Edit</button>
+                  )}
+                  <button className="button" onClick={() => handleDeleteUpdate(update._id)}>Delete</button>
+                </td>
+              ) : null}
             </tr>
           ))}
-          {/* New Project Update Row */}
           <tr>
-            {/* Display input fields for each cell in the new project update row */}
             <td>
               <input
                 className='input'
@@ -221,10 +221,11 @@ const ProjectUpdateTable = () => {
                 onChange={(e) => handleInputChange('project', e.target.value)}
               />
             </td>
-            {/* Display button for adding a new project update */}
-            <td>
-              <Button className="add-button" onClick={handleAddUpdate}>Add Update</Button>
-            </td>
+            {userRole === 'admin' || userRole === 'project manager' ? (
+              <td>
+                <button className="button" onClick={handleAddUpdate}>Add Update</button>
+              </td>
+            ) : null}
           </tr>
         </tbody>
       </table>

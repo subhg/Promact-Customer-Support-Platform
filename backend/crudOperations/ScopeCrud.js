@@ -5,7 +5,10 @@ const Scope = require('../models/Scope');
 const createScope = async (data) => {
   try {
     // Create a new instance of Scope using the provided data
+    console.log('mein data hu',data)
     const scope = new Scope(data);
+    console.log(data)
+    
     // Save the new instance to the database
     const result = await scope.save();
     return result;

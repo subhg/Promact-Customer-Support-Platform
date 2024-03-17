@@ -1,26 +1,45 @@
-// ResourceTable.js
-
 import React, { useEffect, useState } from 'react';
-import { Button } from 'monday-ui-react-core';
-import './Table.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
-/**
- * ResourceTable component manages the display and management of resources.
- */
 const ResourceTable = () => {
-  // State to manage resource data
+  const { isAuthenticated, user } = useAuth0();
+  const [userRole, setUserRole] = useState(null);
   const [resources, setResources] = useState([]);
-  // State to manage the data for a new resource
   const [newResource, setNewResource] = useState({ name: '', role: '', startDate: '', endDate: '', comment: '' });
-  // State to manage the editing state of each row
   const [editingRows, setEditingRows] = useState({});
 
-  // Fetch resource data when the component mounts
+  useEffect(() => {
+    if (isAuthenticated && user && user.email) {
+      const fetchUserRole = async () => {
+        try {
+          const response = await fetch('http://localhost:3000/verify-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: user.email }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to verify email');
+          }
+
+          const data = await response.json();
+          const { role } = data;
+          setUserRole(role);
+        } catch (error) {
+          console.error('Error fetching user role:', error);
+        }
+      };
+
+      fetchUserRole();
+    }
+  }, [isAuthenticated, user]);
+
   useEffect(() => {
     fetchResources();
   }, []);
 
-  // Fetch resource data from the server
   const fetchResources = async () => {
     try {
       const response = await fetch('http://localhost:3000/resource');
@@ -31,9 +50,7 @@ const ResourceTable = () => {
     }
   };
 
-  // Handle input change for each cell in the table
   const handleInputChange = (key, value, resourceId) => {
-    // Update the newResource state with the modified value
     if (resourceId) {
       setResources((prevResources) =>
         prevResources.map((resource) =>
@@ -45,7 +62,6 @@ const ResourceTable = () => {
     }
   };
 
-  // Handle adding a new resource
   const handleAddResource = async () => {
     try {
       const response = await fetch('http://localhost:3000/resource', {
@@ -59,17 +75,13 @@ const ResourceTable = () => {
       const addedResource = await response.json();
       console.log('Resource added successfully:', addedResource);
 
-      // Update the state after adding
       setResources([...resources, addedResource]);
-
-      // Clear input fields
       setNewResource({ name: '', role: '', startDate: '', endDate: '', comment: '' });
     } catch (error) {
       console.error('Error adding resource:', error);
     }
   };
 
-  // Handle updating an existing resource
   const handleUpdateResource = async (id) => {
     try {
       const updatedResource = resources.find((resource) => resource._id === id);
@@ -85,14 +97,12 @@ const ResourceTable = () => {
       const updatedResult = await response.json();
       console.log('Resource updated successfully:', updatedResult);
 
-      // Disable editing after saving
       setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: false }));
     } catch (error) {
       console.error('Error updating resource:', error);
     }
   };
 
-  // Handle deleting an existing resource
   const handleDeleteResource = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/resource/${id}`, {
@@ -102,7 +112,6 @@ const ResourceTable = () => {
       const deletedResult = await response.json();
       console.log('Resource deleted successfully:', deletedResult);
 
-      // Update the state after deletion
       const updatedResources = resources.filter((resource) => resource._id !== id);
       setResources(updatedResources);
     } catch (error) {
@@ -110,7 +119,6 @@ const ResourceTable = () => {
     }
   };
 
-  // Toggle editing state for a row
   const toggleEditing = (id) => {
     setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
@@ -118,9 +126,7 @@ const ResourceTable = () => {
   return (
     <div>
       <h1>Resource Management</h1>
-      {/* Table for displaying resources */}
       <table className="table">
-        {/* Table header */}
         <thead className="header">
           <tr>
             <th>Name</th>
@@ -128,15 +134,12 @@ const ResourceTable = () => {
             <th>Start Date</th>
             <th>End Date</th>
             <th>Comment</th>
-            <th>Action</th>
+            {userRole === 'admin' || userRole === 'project manager' ? <th>Action</th> : null}
           </tr>
         </thead>
-        {/* Table body */}
         <tbody>
-          {/* Map through resources to generate rows */}
           {resources.map((resource) => (
             <tr key={resource._id}>
-              {/* Display cells with input fields when editing */}
               <td>
                 {editingRows[resource._id] ? (
                   <input
@@ -165,7 +168,7 @@ const ResourceTable = () => {
                 {editingRows[resource._id] ? (
                   <input
                     className="input"
-                    type="text"
+                    type="date"
                     value={resource.startDate}
                     onChange={(e) => handleInputChange('startDate', e.target.value, resource._id)}
                   />
@@ -177,7 +180,7 @@ const ResourceTable = () => {
                 {editingRows[resource._id] ? (
                   <input
                     className="input"
-                    type="text"
+                    type="date"
                     value={resource.endDate}
                     onChange={(e) => handleInputChange('endDate', e.target.value, resource._id)}
                   />
@@ -197,20 +200,19 @@ const ResourceTable = () => {
                   resource.comment
                 )}
               </td>
-              {/* Display action buttons for each row */}
-              <td>
-                {editingRows[resource._id] ? (
-                  <Button className="button" onClick={() => handleUpdateResource(resource._id)}>Update</Button>
-                ) : (
-                  <Button className="button" onClick={() => toggleEditing(resource._id)}>Edit</Button>
-                )}
-                <Button className="button" onClick={() => handleDeleteResource(resource._id)}>Delete</Button>
-              </td>
+              {userRole === 'admin' || userRole === 'project manager' ? (
+                <td>
+                  {editingRows[resource._id] ? (
+                    <button className="button" onClick={() => handleUpdateResource(resource._id)}>Update</button>
+                  ) : (
+                    <button className="button" onClick={() => toggleEditing(resource._id)}>Edit</button>
+                  )}
+                  <button className="button" onClick={() => handleDeleteResource(resource._id)}>Delete</button>
+                </td>
+              ) : null}
             </tr>
           ))}
-          {/* New Resource Row */}
           <tr>
-            {/* Display input fields for each cell in the new resource row */}
             <td>
               <input
                 className="input"
@@ -230,7 +232,7 @@ const ResourceTable = () => {
             <td>
               <input
                 className="input"
-                type="text"
+                type="date"
                 value={newResource.startDate}
                 onChange={(e) => handleInputChange('startDate', e.target.value)}
               />
@@ -238,7 +240,7 @@ const ResourceTable = () => {
             <td>
               <input
                 className="input"
-                type="text"
+                type="date"
                 value={newResource.endDate}
                 onChange={(e) => handleInputChange('endDate', e.target.value)}
               />
@@ -251,10 +253,11 @@ const ResourceTable = () => {
                 onChange={(e) => handleInputChange('comment', e.target.value)}
               />
             </td>
-            {/* Display button for adding a new resource */}
-            <td>
-              <Button className="add-button" onClick={handleAddResource}>Add Resource</Button>
-            </td>
+            {userRole === 'admin' || userRole === 'project manager' ? (
+              <td>
+                <button className="button" onClick={handleAddResource}>Add Resource</button>
+              </td>
+            ) : null}
           </tr>
         </tbody>
       </table>

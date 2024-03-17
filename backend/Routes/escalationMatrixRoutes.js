@@ -1,53 +1,60 @@
 const express = require('express');
 const router = express.Router();
 const {
-  createEscalationMatrix,
-  getAllEscalationMatrices,
-  getEscalationMatrixById,
-  updateEscalationMatrix,
-  deleteEscalationMatrix,
-} = require('../crudOperations/EscalationMatrixCrud');
+  createEscalationLevel,
+  getEscalationLevelsByType,
+  updateEscalationLevel,
+  deleteEscalationLevel,
+}= require('../crudOperations/EscalationMatrixCrud');
+// const EscalationMatrix = require('../models/EscalationMatrix');
 
-// Routes for Escalation Matrix entity
-router.post('/', async (req, res) => {
+
+// Create an escalation level
+router.post('/:type', async (req, res) => {
+  
   try {
-    const result = await createEscalationMatrix(req.body);
+    const { type } = req.params;
+    const data = req.body;
+    
+    const result = await createEscalationLevel(type, data);
+    res.json(result);
+    
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get escalation levels by type
+router.get('/:type', async (req, res) => {
+  try {
+    const { type } = req.params;
+    const result = await getEscalationLevelsByType(type);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-router.get('/:id', async (req, res) => {
+// Update an escalation level
+router.put('/:type/:levelId', async (req, res) => {
   try {
-    const result = await getEscalationMatrixById(req.params.id);
+    const { type, levelId } = req.params;
+    const newData = req.body;
+    console.log('subham',newData)
+    const result = await updateEscalationLevel(type, levelId, newData);
+    console.log('hey')
     res.json(result);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ error: error.message });
   }
 });
 
-router.get('/', async (req, res) => {
+// Delete an escalation level
+router.delete('/:type/:levelId', async (req, res) => {
   try {
-    const result = await getAllEscalationMatrices();
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-router.put('/:id', async (req, res) => {
-  try {
-    const result = await updateEscalationMatrix(req.params.id, req.body);
-    res.json(result);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-router.delete('/:id', async (req, res) => {
-  try {
-    const result = await deleteEscalationMatrix(req.params.id);
+    const { type, levelId } = req.params;
+    const result = await deleteEscalationLevel(type, levelId);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });

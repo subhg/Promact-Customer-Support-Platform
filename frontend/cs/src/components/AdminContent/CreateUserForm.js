@@ -1,7 +1,7 @@
 // CreateUserForm.js
 
 import React, { useState } from 'react';
-import { Button } from 'monday-ui-react-core';
+//import { Button } from 'monday-ui-react-core';
 import './CreateUserForm.css';
 
 const CreateUserForm = ({ onUserSubmit }) => {
@@ -101,9 +101,9 @@ const CreateUserForm = ({ onUserSubmit }) => {
           </select>
         </div>
 
-        <Button type="button" onClick={handleAddUser}>
+        <button  className='button'type="button" onClick={handleAddUser}>
           Submit
-        </Button>
+        </button>
       </form>
     </div>
   );
