@@ -89,3 +89,5 @@ The Customer Success Platform is a web application built using the MERN (MongoDB
    ```bash
    npm start
    ```
+4. ###Auth0 callback url:
+   http://localhost:3001
