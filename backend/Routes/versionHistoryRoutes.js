@@ -7,7 +7,7 @@ const {
     getAllVersionHistory,
     updateVersionHistory,
     deleteVersionHistory,
-  } = require('../crudOperations/VersionHistoryCrud');
+  } = require('../controllers/VersionHistoryCrud');
 
 router.post('/', async (req, res) => {
   try {

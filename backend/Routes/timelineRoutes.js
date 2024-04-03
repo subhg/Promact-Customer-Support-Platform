@@ -7,7 +7,7 @@ const {
     getAllTimelines,
     updateTimeline,
     deleteTimeline,
-} = require('../crudOperations/TimelineCrud');
+} = require('../controllers/TimelineCrud');
 
 router.post('/', async (req, res) => {
     try {

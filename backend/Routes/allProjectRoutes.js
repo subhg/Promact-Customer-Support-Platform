@@ -7,7 +7,7 @@ const {
     getAllProjects,
     updateProject,
     deleteProject,
-} = require('../crudOperations/ALLProjectCrud');
+} = require('../controllers/ALLProjectCrud');
 
 router.post('/', async (req, res) => {
     try {

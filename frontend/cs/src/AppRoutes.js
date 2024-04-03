@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import ProjectManager from './components/ProjectManager';
-import Admin from './components/Admin';
-import Auditor from './components/Auditor';
-import Client from './components/Client';
+import ProjectManager from './pages/ProjectManagerDashboard';
+import Admin from './pages/AdminDashboard';
+import Auditor from './pages/AuditorDashboard';
+import Client from './pages/ClientDashboard';
 
 const AppRoutes = () => {
   return (

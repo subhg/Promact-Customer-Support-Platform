@@ -7,7 +7,7 @@ const {
     getAllClientFeedback,
     updateClientFeedback,
     deleteClientFeedback,
-  } = require('../crudOperations/ClientFeedbackCrud');
+  } = require('../controllers/ClientFeedbackCrud');
 
   router.post('/', async (req, res) => {
     try {

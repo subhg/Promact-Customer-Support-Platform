@@ -7,7 +7,7 @@ const {
     getAllSprints,
     updateSprint,
     deleteSprint,
-  } = require('../crudOperations/SprintCrud');
+  } = require('../controllers/SprintCrud');
 
 router.post('/', async (req, res) => {
   try {

@@ -6,7 +6,7 @@ const {
   getAuditHistoryById,
   updateAuditHistory,
   deleteAuditHistory,
-} = require('../crudOperations/AuditHistoryCrud');
+} = require('../controllers/AuditHistoryCrud');
 
 // Routes for AuditHistory entity
 router.post('/', async (req, res) => {

@@ -7,7 +7,7 @@ const {
     getAllResource,
     updateResource,
     deleteResource,
-  } = require('../crudOperations/ResourceCrud');
+  } = require('../controllers/ResourceCrud');
 
   router.post('/', async (req, res) => {
     try {

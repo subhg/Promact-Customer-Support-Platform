@@ -5,7 +5,7 @@ const {
   getEscalationLevelsByType,
   updateEscalationLevel,
   deleteEscalationLevel,
-}= require('../crudOperations/EscalationMatrixCrud');
+}= require('../controllers/EscalationMatrixCrud');
 // const EscalationMatrix = require('../models/EscalationMatrix');
 
 

@@ -7,7 +7,7 @@ const {
     getAllClientMeeting,
     updateClientMeeting,
     deleteClientMeeting,
-  } = require('../crudOperations/ClientMeetingCrud');
+  } = require('../controllers/ClientMeetingCrud');
 
   router.post('/', async (req, res) => {
     try {

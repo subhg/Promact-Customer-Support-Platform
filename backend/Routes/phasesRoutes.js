@@ -7,7 +7,7 @@ const {
     getAllPhases,
     updatePhases,
     deletePhases,
-  } = require('../crudOperations/PhasesCrud');
+  } = require('../controllers/PhasesCrud');
 
 router.post('/', async (req, res) => {
   try {

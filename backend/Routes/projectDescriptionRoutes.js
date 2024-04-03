@@ -6,7 +6,7 @@ const {
   getProjectDescriptionById,
   updateProjectDescription,
   deleteProjectDescription,
-} = require('../crudOperations/ProjectDescriptionCrud');
+} = require('../controllers/ProjectDescriptionCrud');
 
 // Routes for Project Description entity
 router.post('/', async (req, res) => {

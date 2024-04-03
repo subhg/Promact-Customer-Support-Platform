@@ -7,7 +7,7 @@ const {
     getAllApprovedTeams,
     updateApprovedTeam,
     deleteApprovedTeam,
-  } = require('../crudOperations/ApprovedTeamCrud');
+  } = require('../controllers/ApprovedTeamCrud');
 
   router.post('/', async (req, res) => {
     try {

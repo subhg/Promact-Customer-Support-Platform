@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Auth from './components/Auth/Auth';
-import Navbar from './components/Navbar';
-import LeftNavbar from './components/LeftNavbar';
+import Auth from './components/RoleBased/Auth';
+import Navbar from './pages/Navbar';
+import LeftNavbar from './pages/LeftNavbar';
 import AppRoutes from './AppRoutes'; // Import the routes configuration
 import { useAuth0 } from '@auth0/auth0-react';
 import './App.css';

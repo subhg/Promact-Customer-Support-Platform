@@ -14,7 +14,7 @@ const LoginButton = () => {
 
   return (
     // Render a button that triggers loginWithRedirect on click
-    <button onClick={() => loginWithRedirect()}>Login</button>
+    <button className="button" onClick={() => loginWithRedirect()}>Login</button>
   );
 };
 

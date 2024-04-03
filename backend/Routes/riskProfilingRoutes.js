@@ -7,7 +7,7 @@ const {
   getAllRiskProfiling,
   updateRiskProfiling,
   deleteRiskProfiling,
-} = require('../crudOperations/RiskProfilingCrud');
+} = require('../controllers/RiskProfilingCrud');
 
 // Create a new risk profiling entry
 router.post('/', async (req, res) => {

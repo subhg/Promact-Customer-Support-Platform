@@ -6,7 +6,7 @@ const{
     getAllUser,
     getUserRoleById,
     
-  }= require('../crudOperations/userController');
+  }= require('../controllers/userController');
 
   router.post('/', async (req, res) => {
     try {

@@ -7,7 +7,7 @@ const {
     getAllProjectStacks,
     updateProjectStack,
     deleteProjectStack,
-  } = require('../crudOperations/ProjectStackCrud');
+  } = require('../controllers/ProjectStackCrud');
 
 // Route to create a new project stack
 router.post('/', async (req, res) => {

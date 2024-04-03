@@ -15,7 +15,7 @@ const LogoutButton = () => {
   return (
     // Render a button that triggers logout with redirect on click
     <div className="logout-button">
-      <button onClick={() => logout({ returnTo: window.location.origin })}>
+      <button  className="button" onClick={() => logout({ returnTo: window.location.origin })}>
         Log Out
       </button>
     </div>

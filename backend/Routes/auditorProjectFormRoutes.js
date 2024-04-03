@@ -7,7 +7,7 @@ const {
   getAllAuditorProjectForm,
   updateAuditorProjectForm,
   deleteAuditorProjectForm
-} = require('../crudOperations/auditorProjectFormController');
+} = require('../controllers/auditorProjectFormController');
 
 // Route to create a new auditor project form
 router.post('/', async (req, res) => {

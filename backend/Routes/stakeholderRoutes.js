@@ -7,7 +7,7 @@ const {
     getAllStakeholders,
     updateStakeholder,
     deleteStakeholder,
-} = require('../crudOperations/StakeholderCrud');
+} = require('../controllers/StakeholderCrud');
 
 router.post('/', async (req, res) => {
     try {

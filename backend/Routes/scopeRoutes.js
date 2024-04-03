@@ -7,7 +7,7 @@ const {
     getAllScopes,
     updateScope,
     deleteScope,
-  } = require('../crudOperations/ScopeCrud');
+  } = require('../controllers/ScopeCrud');
 
 router.post('/', async (req, res) => {
   try {
