@@ -43,7 +43,7 @@ const ProjectBudgetTable = () => {
   useEffect(() => {
     const fetchProjectBudgets = async () => {
       try {
-        const response = await fetch('http://localhost:3000/projectBudget');
+        const response = await fetch('http://localhost:3000/projectBudgets');
         const data = await response.json();
         setProjectBudgets(data);
       } catch (error) {
@@ -74,7 +74,7 @@ const ProjectBudgetTable = () => {
   // Function to add a new project budget
   const handleAddProjectBudget = async () => {
     try {
-      const response = await fetch('http://localhost:3000/projectBudget', {
+      const response = await fetch('http://localhost:3000/projectBudgets', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ const ProjectBudgetTable = () => {
     try {
       const updatedProjectBudget = projectBudgets.find(budget => budget._id === id);
 
-      const response = await fetch(`http://localhost:3000/projectBudget/${id}`, {
+      const response = await fetch(`http://localhost:3000/projectBudgets/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ const ProjectBudgetTable = () => {
   // Function to delete a project budget
   const handleDeleteProjectBudget = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/projectBudget/${id}`, {
+      const response = await fetch(`http://localhost:3000/projectBudgets/${id}`, {
         method: 'DELETE',
       });
 

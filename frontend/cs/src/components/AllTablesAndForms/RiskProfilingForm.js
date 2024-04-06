@@ -51,7 +51,7 @@ const RiskProfilingForm = () => {
 
   const fetchRiskData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/riskProfiling');
+      const response = await fetch('http://localhost:3000/riskProfilings');
       const data = await response.json();
       setRiskData(data);
     } catch (error) {
@@ -98,7 +98,7 @@ const RiskProfilingForm = () => {
     try {
       let response;
       if (editingId) {
-        response = await fetch(`http://localhost:3000/riskProfiling/${editingId}`, {
+        response = await fetch(`http://localhost:3000/riskProfilings/${editingId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const RiskProfilingForm = () => {
           body: JSON.stringify(formData),
         });
       } else {
-        response = await fetch('http://localhost:3000/riskProfiling', {
+        response = await fetch('http://localhost:3000/riskProfilings', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ const RiskProfilingForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/riskProfiling/${id}`, {
+      const response = await fetch(`http://localhost:3000/riskProfilings/${id}`, {
         method: 'DELETE',
       });
 
@@ -241,7 +241,8 @@ const RiskProfilingForm = () => {
           </tr>
         </thead>
         <tbody>
-          {riskData.map((risk) => (
+          {riskData.map((risk) => 
+          (
             <tr key={risk._id}>
               <td>{risk.riskType}</td>
               <td>{risk.description}</td>

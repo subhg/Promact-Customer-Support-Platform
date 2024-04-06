@@ -4,32 +4,31 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// Define the resource schema within an approved team
-/*const resourceSchema = new Schema({});*/  // Optional: Define a schema for resources if needed
+
 
 // Ensure that the phase field is optional
 const approvedTeamSchema = new Schema({
   phase: {
     type: String,
-    required: true, // Phase is a required field
+    required: true, 
   },
   name: {
     type: String,
-    required: true, // Team name is a required field
+    required: true, 
   },
   role: {
     type: String,
-    required: true, // Role is a required field
+    required: true, 
   },
   availability: {
-    type: String, // Change this to String
-    required: true, // Availability is a required field
+    type: String, 
+    required: true, 
   },
   duration: {
     type: String,
-    required: true, // Duration is a required field
+    required: true, 
   },
-  //resources: [resourceSchema],  // Optional: Include a reference to resource schema if resources are associated with the approved team
+  //resources: [resourceSchema],
 });
 
 // Create the ApprovedTeam model

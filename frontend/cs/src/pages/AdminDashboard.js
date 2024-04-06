@@ -20,6 +20,8 @@ import RiskProfilingForm from '../components/AllTablesAndForms/RiskProfilingForm
 import StackandScope from '../components/AllTablesAndForms/StackandScope';
 import StakeholderTable from '../components/AllTablesAndForms/StakeholderTable';
 import VersionHistoryTable from '../components/AllTablesAndForms/VersionHistoryTable';
+import DownloadPdf from '../components/AllTablesAndForms/DownloadPdf';
+
 
 const Admin = () => {
   const handleUserSubmit = (addedUser) => {
@@ -52,6 +54,7 @@ const Admin = () => {
         </TabList>
       
         <div className="tab-content">
+          <DownloadPdf/>
           <TabPanel>
             <CreateUserForm onUserSubmit={handleUserSubmit} />
           </TabPanel>

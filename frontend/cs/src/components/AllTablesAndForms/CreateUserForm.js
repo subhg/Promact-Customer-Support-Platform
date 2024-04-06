@@ -17,7 +17,7 @@ const CreateUserForm = ({ onUserSubmit }) => {
   // Function to add a new user
   const handleAddUser = async () => {
     try {
-      const response = await fetch('http://localhost:3000/user', {
+      const response = await fetch('http://localhost:3000/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

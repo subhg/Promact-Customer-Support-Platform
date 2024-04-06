@@ -1,16 +1,16 @@
 // Import the AuditHistory model
 const AuditHistory = require('../models/AuditHistory.js');
+const { sendEmail } = require('./EmailController.js');
+const Stakeholder = require('../models/Stakeholder'); // Import the Stakeholder model
+
 
 // Create
 const createAuditHistory = async (data) => {
   try {
-    // Create a new instance of AuditHistory using the provided data
     const auditHistory = new AuditHistory(data);
-    // Save the new instance to the database
     const result = await auditHistory.save();
     return result;
   } catch (error) {
-    // Handle any errors that occur during the creation process
     throw error;
   }
 };
@@ -18,50 +18,68 @@ const createAuditHistory = async (data) => {
 // Read
 const getAllAuditHistory = async () => {
   try {
-    // Retrieve all audit history entries from the database
     const result = await AuditHistory.find();
     return result;
   } catch (error) {
-    // Handle any errors that occur during the retrieval process
     throw error;
   }
 };
 
 const getAuditHistoryById = async (auditHistoryId) => {
   try {
-    // Retrieve a specific audit history entry by its ID from the database
-    const result = await AuditHistory.findById(auditHistoryEntryId);
+    const result = await AuditHistory.findById(auditHistoryId);
     return result;
   } catch (error) {
-    // Handle any errors that occur during the retrieval process
     throw error;
   }
 };
 
 // Update
-const updateAuditHistory = async (auditHistoryId, newData) => {
+const updateAuditHistory = async (auditHistoryId, newData,  stakeholderId) => {
   try {
-    // Find and update the audit history entry by its ID with the new data
+    console.log(newData)
     const result = await AuditHistory.findByIdAndUpdate(
-      auditHistoryEntryId,
+      auditHistoryId,
       { $set: newData },
       { new: true }
     );
+
+    // Get the updated audit history
+    const updatedAuditHistory = await AuditHistory.findById(auditHistoryId);
+
+    // Fetch the stakeholders associated with the updated audit history
+    const stakeholders = await Stakeholder.find();
+    const contacts = stakeholders.map(stakeholder => stakeholder.contact);
+    const names = stakeholders.map(stakeholder => stakeholder.name);
+
+    // Send email to each stakeholder
+    const subject = "Audit Update Notification";
+
+    for (let i = 0; i < contacts.length; i++) {
+      const contact = contacts[i];
+      const name = names[i];
+
+      const message = `Hello ${name},\n\nPlease note that the audit has been completed, and here is the audit summary:\n\n${result}}\n\nLocation: http://localhost:3001/\n\nThanks and Regards,\nPromact Infotech Pvt Ltd`;
+
+      await sendEmail(contact, subject, message);
+    }
+
+    console.log('Emails sent successfully');
+
     return result;
   } catch (error) {
-    // Handle any errors that occur during the update process
+    console.error('Error updating audit history:', error);
     throw error;
   }
 };
 
+
 // Delete
 const deleteAuditHistory = async (auditHistoryId) => {
   try {
-    // Find and delete the audit history entry by its ID
-    const result = await AuditHistory.findByIdAndDelete(auditHistoryEntryId);
+    const result = await AuditHistory.findByIdAndDelete(auditHistoryId);
     return result;
   } catch (error) {
-    // Handle any errors that occur during the deletion process
     throw error;
   }
 };

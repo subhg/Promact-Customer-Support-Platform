@@ -1,56 +1,68 @@
 const express = require('express');
 const router = express.Router();
 
+// Import CRUD operations for ClientMeeting
 const {
     createClientMeeting,
     getClientMeetingById,
     getAllClientMeeting,
     updateClientMeeting,
     deleteClientMeeting,
-  } = require('../controllers/ClientMeetingCrud');
+} = require('../controllers/ClientMeetingCrud');
 
-  router.post('/', async (req, res) => {
+// Route to create a new client meeting entry
+router.post('/', async (req, res) => {
     try {
-      const result = await createClientMeeting(req.body);
-      res.json(result);
+        const result = await createClientMeeting(req.body);
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  router.get('/:id', async (req, res) => {
+});
+
+// Route to get a client meeting entry by its ID
+router.get('/:id', async (req, res) => {
     try {
-      const result = await getClientMeetingById(req.params.id);
-      res.json(result);
+        const result = await getClientMeetingById(req.params.id);
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  router.get('/', async (req, res) => {
+});
+
+// Route to get all client meeting entries
+router.get('/', async (req, res) => {
     try {
-      const result = await getAllClientMeeting();
-      res.json(result);
+        const result = await getAllClientMeeting();
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  router.put('/:id', async (req, res) => {
+});
+
+// Route to update a client meeting entry by its ID
+router.put('/:id', async (req, res) => {
     try {
-      const result = await updateClientMeeting(req.params.id, req.body);
-      res.json(result);
+        const result = await updateClientMeeting(req.params.id, req.body);
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  router.delete('/:id', async (req, res) => {
+});
+
+// Route to delete a client meeting entry by its ID
+router.delete('/:id', async (req, res) => {
     try {
-      const result = await deleteClientMeeting(req.params.id);
-      res.json(result);
+        const result = await deleteClientMeeting(req.params.id);
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-module.exports= router
+});
+
+module.exports = router;

@@ -19,7 +19,7 @@ const CreateAuditorProjectForm = ({ onFormSubmit }) => {
   // Function to fetch auditor projects
   const fetchAuditorProjects = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auditorProjectForm');
+      const response = await fetch('http://localhost:3000/auditorProjectForms');
       const data = await response.json();
       setAuditorProjects(data);
     } catch (error) {
@@ -57,7 +57,7 @@ const CreateAuditorProjectForm = ({ onFormSubmit }) => {
   // Function to save the form data
   const handleSaveForm = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auditorProjectForm', {
+      const response = await fetch('http://localhost:3000/auditorProjectForms', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

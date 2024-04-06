@@ -43,7 +43,7 @@ const AllProjectTable = () => {
   // Function to fetch projects data
   const fetchProjects = async () => {
     try {
-      const response = await fetch('http://localhost:3000/projects');
+      const response = await fetch('http://localhost:3000/allprojects');
       const data = await response.json();
       setProjects(data);
     } catch (error) {
@@ -67,7 +67,7 @@ const AllProjectTable = () => {
   // Function to add new project
   const handleAddProject = async () => {
     try {
-      const response = await fetch('http://localhost:3000/projects', {
+      const response = await fetch('http://localhost:3000/allprojects', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const AllProjectTable = () => {
   const handleUpdateProject = async (id) => {
     try {
       const updatedProject = projects.find(project => project._id === id);
-      const response = await fetch(`http://localhost:3000/projects/${id}`, {
+      const response = await fetch(`http://localhost:3000/allprojects/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const AllProjectTable = () => {
   // Function to delete project
   const handleDeleteProject = async (id) => {
     try {
-      await fetch(`http://localhost:3000/projects/${id}`, {
+      await fetch(`http://localhost:3000/allprojects/${id}`, {
         method: 'DELETE',
       });
 

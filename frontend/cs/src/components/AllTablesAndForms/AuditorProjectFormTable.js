@@ -13,7 +13,7 @@ const AuditorProjectFormTable = () => {
   // Fetch auditor projects data from the API
   const fetchAuditorProjects = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auditorProjectForm');
+      const response = await fetch('http://localhost:3000/auditorProjectForms');
       const data = await response.json();
       setAuditorProjects(data);
     } catch (error) {
@@ -24,7 +24,7 @@ const AuditorProjectFormTable = () => {
   // Delete auditor project by ID
   const handleDeleteProject = async (projectId) => {
     try {
-      await fetch(`http://localhost:3000/auditorProjectForm/${projectId}`, {
+      await fetch(`http://localhost:3000/auditorProjectForms/${projectId}`, {
         method: 'DELETE',
       });
       const updatedProjects = auditorProjects.filter(project => project._id !== projectId);
@@ -37,7 +37,7 @@ const AuditorProjectFormTable = () => {
   // Update auditor project by ID
   const handleUpdateProject = async (projectId, updatedProject) => {
     try {
-      await fetch(`http://localhost:3000/auditorProjectForm/${projectId}`, {
+      await fetch(`http://localhost:3000/auditorProjectForms/${projectId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

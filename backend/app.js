@@ -27,6 +27,12 @@ const auditorProjectFormRoutes = require('./routes/auditorProjectFormRoutes');
 const allProjectRoutes = require('./routes/allProjectRoutes');
 const userRoutes= require('./routes/userRoutes')
 const UserModel = require('./models/userModel');
+const projectRoutes = require('./routes/projectRoutes');
+const emailRoutes = require('./routes/emailRoutes');
+const exportDocRoutes = require('./routes/exportDocRoutes');
+
+
+
 //const ClientMeeting = require('./models/ClientMeeting');
 
 app.use(bodyParser.json());
@@ -40,33 +46,29 @@ app.use(cors({
 
 
 
-app.use('/approvedTeam', approvedTeamRoutes);
-app.use('/resource', resourceRoutes);
-app.use('/clientFeedback', clientFeedbackRoutes);
-app.use('/projectUpdate', projectUpdateRoutes);
-app.use('/auditHistory', auditHistoryRoutes);
-app.use('/clientMeeting',clientMeetingRoutes);
-app.use('/projectBudget',projectBudgetRoutes);
-app.use('/versionHistory', versionHistoryRoutes);
+app.use('/approvedTeams', approvedTeamRoutes);
+app.use('/resources', resourceRoutes);
+app.use('/clientFeedbacks', clientFeedbackRoutes);
+app.use('/projectUpdates', projectUpdateRoutes);
+app.use('/auditHistories', auditHistoryRoutes);
+app.use('/clientMeetings',clientMeetingRoutes);
+app.use('/projectBudgets',projectBudgetRoutes);
+app.use('/versionHistories', versionHistoryRoutes);
 app.use('/projectDescription', projectDescriptionRoutes);
-app.use('/scope', scopeRoutes);
+app.use('/scopes', scopeRoutes);
 app.use('/projectStacks', projectStackRoutes);
-app.use('/escalationMatrix', escalationMatrixRoutes);
+app.use('/escalationMatrices', escalationMatrixRoutes);
 app.use('/stakeholders',stakeholderRoutes);
-app.use('/riskProfiling', riskProfilingRoutes);
+app.use('/riskProfilings', riskProfilingRoutes);
 app.use('/phases', phasesRoutes);
-app.use('/sprint', sprintRoutes);
+app.use('/sprints', sprintRoutes);
 app.use('/timeline', timelineRoutes);
-app.use('/auditorProjectForm', auditorProjectFormRoutes);
-app.use('/projects', allProjectRoutes);
-
-
-
-
-
-
-
-app.use('/user',userRoutes)
+app.use('/auditorProjectForms', auditorProjectFormRoutes);
+app.use('/allprojects', allProjectRoutes);
+app.use('/projects', projectRoutes);
+app.use('/send-reset-email', emailRoutes);
+app.use('/generate-pdf', exportDocRoutes);
+app.use('/users',userRoutes)
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/customersupport', {

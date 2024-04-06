@@ -8,28 +8,24 @@ const Schema = mongoose.Schema;
 const resourceSchema = new Schema({
   name: {
     type: String,
-    required: true // Name of the resource is a required field
+    required: true 
   },
   role: {
     type: String,
-    required: true // Role of the resource is a required field
+    required: true 
   },
   startDate: {
     type: Date,
-    required: true // Start date of the resource is a required field
+    required: true 
   },
   endDate: {
     type: Date,
-    required: true // End date of the resource is a required field
+    required: true 
   },
   comment: {
-    type: String // Optional: Additional comments about the resource
+    type: String 
   },
-  //project: {
-  //  type: String,
-  //  ref: 'Project',
-  //  required: true
-  //}
+  
 });
 
 // Create the Resource model

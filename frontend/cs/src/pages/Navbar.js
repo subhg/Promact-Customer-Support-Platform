@@ -35,7 +35,7 @@ const Navbar = () => {
         {/* Use the Monday UI React Core Search component */}
         <Search placeholder="Search" size={Search.sizes.LARGE} />
       </div>
-
+  
       {/* Conditional rendering based on authentication status */}
       {isAuthenticated ? (
         // If user is authenticated, show the profile and logout button

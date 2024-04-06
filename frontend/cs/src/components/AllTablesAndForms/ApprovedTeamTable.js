@@ -50,7 +50,7 @@ const ApprovedTeamTable = () => {
   // Function to fetch approved teams
   const fetchApprovedTeams = async () => {
     try {
-      const response = await fetch('http://localhost:3000/approvedTeam');
+      const response = await fetch('http://localhost:3000/approvedTeams');
       const data = await response.json();
       setApprovedTeams(data);
     } catch (error) {
@@ -74,7 +74,7 @@ const ApprovedTeamTable = () => {
   // Function to add new team
   const handleAddTeam = async () => {
     try {
-      const response = await fetch('http://localhost:3000/approvedTeam', {
+      const response = await fetch('http://localhost:3000/approvedTeams', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ const ApprovedTeamTable = () => {
     try {
       const updatedTeam = approvedTeams.find(team => team._id === id);
 
-      const response = await fetch(`http://localhost:3000/approvedTeam/${id}`, {
+      const response = await fetch(`http://localhost:3000/approvedTeams/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -117,7 +117,7 @@ const ApprovedTeamTable = () => {
   // Function to delete approved team
   const handleDeleteTeam = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/approvedTeam/${id}`, {
+      const response = await fetch(`http://localhost:3000/approvedTeams/${id}`, {
         method: 'DELETE',
       });
 

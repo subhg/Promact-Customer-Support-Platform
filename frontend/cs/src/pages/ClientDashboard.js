@@ -6,6 +6,7 @@ import ClientFeedbackTable from '../components/AllTablesAndForms/ClientFeedbackT
 import PhasesTable from '../components/AllTablesAndForms/PhasesTable';
 import SprintTable from '../components/AllTablesAndForms/SprintTable';
 import ResourceTable from '../components/AllTablesAndForms/ResourceTable';
+import DownloadPdf from '../components/AllTablesAndForms/DownloadPdf';
 
 const Client = () => {
   const handleUserSubmit = (addedUser) => {
@@ -24,6 +25,7 @@ const Client = () => {
           <Tab>Resource</Tab>
         </TabList>
         <div>
+          <DownloadPdf/>
           <TabPanel>
             <AuditHistoryTable />
           </TabPanel>

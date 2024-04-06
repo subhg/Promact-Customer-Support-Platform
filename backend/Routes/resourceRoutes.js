@@ -1,58 +1,68 @@
 const express = require('express');
 const router = express.Router();
 
+// Import CRUD operations for Resource
 const {
     createResource,
     getResourceById,
     getAllResource,
     updateResource,
     deleteResource,
-  } = require('../controllers/ResourceCrud');
+} = require('../controllers/ResourceCrud');
 
-  router.post('/', async (req, res) => {
+// Route to create a new resource
+router.post('/', async (req, res) => {
     try {
-      const result = await createResource(req.body);
-      res.json(result);
+        const result = await createResource(req.body);
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  router.get('/', async (req, res) => {
+});
+
+// Route to get all resources
+router.get('/', async (req, res) => {
     try {
-      const result = await getAllResource();
-      res.json(result);
+        const result = await getAllResource();
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  router.get('/:id', async (req, res) => {
+});
+
+// Route to get a resource by its ID
+router.get('/:id', async (req, res) => {
     try {
-      const result = await getResourceById(req.params.id);
-      res.json(result);
+        const result = await getResourceById(req.params.id);
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  
-  router.put('/:id', async (req, res) => {
+});
+
+// Route to update a resource by its ID
+router.put('/:id', async (req, res) => {
     try {
-      const result = await updateResource(req.params.id, req.body);
-      res.json(result);
+        const result = await updateResource(req.params.id, req.body);
+        res.json(result);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
-  
-  router.delete('/:id', async (req, res) => {
+});
+
+// Route to delete a resource by its ID
+router.delete('/:id', async (req, res) => {
     try {
-      const result = await deleteResource(req.params.id);
-      res.json({status: "Success"});
+        const result = await deleteResource(req.params.id);
+        res.json({ status: "Success" });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        
+        res.status(500).json({ error: error.message });
     }
-  });
+});
 
 module.exports = router;

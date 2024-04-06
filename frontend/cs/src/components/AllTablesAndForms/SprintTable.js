@@ -43,7 +43,7 @@ const SprintTable = () => {
 
   const fetchSprints = async () => {
     try {
-      const response = await fetch('http://localhost:3000/sprint');
+      const response = await fetch('http://localhost:3000/sprints');
       const data = await response.json();
       setSprints(data);
     } catch (error) {
@@ -65,7 +65,7 @@ const SprintTable = () => {
 
   const handleAddSprint = async () => {
     try {
-      const response = await fetch('http://localhost:3000/sprint', {
+      const response = await fetch('http://localhost:3000/sprints', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ const SprintTable = () => {
     try {
       const updatedSprint = sprints.find(sprint => sprint._id === id);
 
-      const response = await fetch(`http://localhost:3000/sprint/${id}`, {
+      const response = await fetch(`http://localhost:3000/sprints/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const SprintTable = () => {
 
   const handleDeleteSprint = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/sprint/${id}`, {
+      const response = await fetch(`http://localhost:3000/sprints/${id}`, {
         method: 'DELETE',
       });
 

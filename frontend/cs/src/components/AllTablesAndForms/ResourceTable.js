@@ -45,7 +45,7 @@ const ResourceTable = () => {
   // Function to fetch resources
   const fetchResources = async () => {
     try {
-      const response = await fetch('http://localhost:3000/resource');
+      const response = await fetch('http://localhost:3000/resources');
       const data = await response.json();
       setResources(data); // Set resources in state
     } catch (error) {
@@ -71,7 +71,7 @@ const ResourceTable = () => {
   // Function to add a new resource
   const handleAddResource = async () => {
     try {
-      const response = await fetch('http://localhost:3000/resource', {
+      const response = await fetch('http://localhost:3000/resources', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ const ResourceTable = () => {
     try {
       const updatedResource = resources.find((resource) => resource._id === id);
 
-      const response = await fetch(`http://localhost:3000/resource/${id}`, {
+      const response = await fetch(`http://localhost:3000/resources/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ const ResourceTable = () => {
   // Function to delete a resource
   const handleDeleteResource = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/resource/${id}`, {
+      const response = await fetch(`http://localhost:3000/resources/${id}`, {
         method: 'DELETE',
       });
 

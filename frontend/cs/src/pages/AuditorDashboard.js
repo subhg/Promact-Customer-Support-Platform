@@ -19,6 +19,7 @@ import ClientMeetingTable from '../components/AllTablesAndForms/ClientMeetingTab
 import ResourceTable from '../components/AllTablesAndForms/ResourceTable';
 import ProjectUpdateTable from '../components/AllTablesAndForms/ProjectUpdateTable';
 import ApprovedTeamTable from '../components/AllTablesAndForms/ApprovedTeamTable';
+import DownloadPdf from '../components/AllTablesAndForms/DownloadPdf';
 
 const Auditor = () => {
   const handleUserSubmit = (addedUser) => {
@@ -50,6 +51,7 @@ const Auditor = () => {
           <Tab>Version History</Tab>
         </TabList>
         <div>
+          <DownloadPdf/>
           <TabPanel>
             <CreateAuditorProjectForm onUserSubmit={handleUserSubmit} />
           </TabPanel>

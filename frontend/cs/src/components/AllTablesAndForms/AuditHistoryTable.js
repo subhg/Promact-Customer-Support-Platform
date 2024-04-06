@@ -5,8 +5,8 @@ const AuditHistoryTable = () => {
   // Authentication related states
   const { isAuthenticated, user } = useAuth0();
   const [userRole, setUserRole] = useState('');
-  
-  // State for storing audit history and new audit entry details
+
+  // State for storing audit history and new entry details
   const [auditHistory, setAuditHistory] = useState([]);
   const [newAuditEntry, setNewAuditEntry] = useState({
     dateOfAudit: '',
@@ -16,7 +16,7 @@ const AuditHistoryTable = () => {
     commentQueries: '',
     actionItem: '',
   });
-  
+
   // State to manage editing rows
   const [editingRows, setEditingRows] = useState({});
 
@@ -57,7 +57,7 @@ const AuditHistoryTable = () => {
   // Function to fetch audit history
   const fetchAuditHistory = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auditHistory');
+      const response = await fetch('http://localhost:3000/auditHistories');
       const data = await response.json();
       setAuditHistory(data);
     } catch (error) {
@@ -65,23 +65,23 @@ const AuditHistoryTable = () => {
     }
   };
 
-  // Function to handle input change for editing audit history entry or adding new entry
+  // Function to handle input change for editing audit history or adding new entry
   const handleInputChange = (key, value, entryId) => {
     if (entryId) {
-      setAuditHistory((prevHistory) =>
-        prevHistory.map((entry) =>
+      setAuditHistory(prevHistory =>
+        prevHistory.map(entry =>
           entry._id === entryId ? { ...entry, [key]: value } : entry
         )
       );
     } else {
-      setNewAuditEntry((prevEntry) => ({ ...prevEntry, [key]: value }));
+      setNewAuditEntry(prevEntry => ({ ...prevEntry, [key]: value }));
     }
   };
 
-  // Function to add new audit history entry
+  // Function to add new entry
   const handleAddEntry = async () => {
     try {
-      const response = await fetch('http://localhost:3000/auditHistory', {
+      const response = await fetch('http://localhost:3000/auditHistories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,12 +106,12 @@ const AuditHistoryTable = () => {
     }
   };
 
-  // Function to update audit history entry
+  // Function to update entry
   const handleUpdateEntry = async (id) => {
     try {
-      const updatedEntry = auditHistory.find((entry) => entry._id === id);
+      const updatedEntry = auditHistory.find(entry => entry._id === id);
 
-      const response = await fetch(`http://localhost:3000/auditHistory/${id}`, {
+      const response = await fetch(`http://localhost:3000/auditHistories/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -122,23 +122,23 @@ const AuditHistoryTable = () => {
       const updatedResult = await response.json();
       console.log('Audit history entry updated successfully:', updatedResult);
 
-      setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: false }));
+      setEditingRows(prevEditingRows => ({ ...prevEditingRows, [id]: false }));
     } catch (error) {
       console.error('Error updating audit history entry:', error);
     }
   };
 
-  // Function to delete audit history entry
+  // Function to delete entry
   const handleDeleteEntry = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/auditHistory/${id}`, {
+      const response = await fetch(`http://localhost:3000/auditHistories/${id}`, {
         method: 'DELETE',
       });
 
       const deletedResult = await response.json();
       console.log('Audit history entry deleted successfully:', deletedResult);
 
-      const updatedHistory = auditHistory.filter((entry) => entry._id !== id);
+      const updatedHistory = auditHistory.filter(entry => entry._id !== id);
       setAuditHistory(updatedHistory);
     } catch (error) {
       console.error('Error deleting audit history entry:', error);
@@ -147,7 +147,7 @@ const AuditHistoryTable = () => {
 
   // Function to toggle editing mode for a row
   const toggleEditing = (id) => {
-    setEditingRows((prevEditingRows) => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
+    setEditingRows(prevEditingRows => ({ ...prevEditingRows, [id]: !prevEditingRows[id] }));
   };
 
   return (
@@ -166,14 +166,62 @@ const AuditHistoryTable = () => {
           </tr>
         </thead>
         <tbody>
-          {auditHistory.map((entry) => (
+          {auditHistory.map(entry => (
             <tr key={entry._id}>
-              <td>{entry.dateOfAudit}</td>
-              <td>{entry.reviewedBy}</td>
-              <td>{entry.statusReviewed}</td>
-              <td>{entry.section}</td>
-              <td>{entry.commentQueries}</td>
-              <td>{entry.actionItem}</td>
+              <td>{editingRows[entry._id] ? (
+                <input
+                  type="date"
+                  value={entry.dateOfAudit}
+                  onChange={(e) => handleInputChange('dateOfAudit', e.target.value, entry._id)}
+                />
+              ) : (
+                entry.dateOfAudit
+              )}</td>
+              <td>{editingRows[entry._id] ? (
+                <input
+                  type="text"
+                  value={entry.reviewedBy}
+                  onChange={(e) => handleInputChange('reviewedBy', e.target.value, entry._id)}
+                />
+              ) : (
+                entry.reviewedBy
+              )}</td>
+              <td>{editingRows[entry._id] ? (
+                <input
+                  type="text"
+                  value={entry.statusReviewed}
+                  onChange={(e) => handleInputChange('statusReviewed', e.target.value, entry._id)}
+                />
+              ) : (
+                entry.statusReviewed
+              )}</td>
+              <td>{editingRows[entry._id] ? (
+                <input
+                  type="text"
+                  value={entry.section}
+                  onChange={(e) => handleInputChange('section', e.target.value, entry._id)}
+                />
+              ) : (
+                entry.section
+              )}</td>
+              <td>{editingRows[entry._id] ? (
+                <input
+                  type="text"
+                  value={entry.commentQueries}
+                  onChange={(e) => handleInputChange('commentQueries', e.target.value, entry._id)}
+                />
+              ) : (
+                entry.commentQueries
+              )}</td>
+              <td>{editingRows[entry._id] ? (
+                <input
+                  type="text"
+                  value={entry.actionItem}
+                  onChange={(e) => handleInputChange('actionItem', e.target.value, entry._id)}
+                />
+              ) : (
+                entry.actionItem
+              )}</td>
               {(userRole === 'admin' || userRole === 'auditor') && (
                 <td>
                   {editingRows[entry._id] ? (
@@ -191,7 +239,7 @@ const AuditHistoryTable = () => {
               <td>
                 <input
                   className="input"
-                  type="date" // Change input type to date
+                  type="date"
                   value={newAuditEntry.dateOfAudit}
                   onChange={(e) => handleInputChange('dateOfAudit', e.target.value)}
                 />

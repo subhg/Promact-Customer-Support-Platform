@@ -44,7 +44,7 @@ const ClientMeetingTable = () => {
 
   const fetchClientMeetings = async () => {
     try {
-      const response = await fetch('http://localhost:3000/clientMeeting');
+      const response = await fetch('http://localhost:3000/clientMeetings');
       const data = await response.json();
       setClientMeetings(data);
     } catch (error) {
@@ -66,7 +66,7 @@ const ClientMeetingTable = () => {
 
   const handleAddMeeting = async () => {
     try {
-      const response = await fetch('http://localhost:3000/clientMeeting', {
+      const response = await fetch('http://localhost:3000/clientMeetings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ const ClientMeetingTable = () => {
     try {
       const updatedMeeting = clientMeetings.find((meeting) => meeting._id === id);
 
-      const response = await fetch(`http://localhost:3000/clientMeeting/${id}`, {
+      const response = await fetch(`http://localhost:3000/clientMeetings/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const ClientMeetingTable = () => {
 
   const handleDeleteMeeting = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/clientMeeting/${id}`, {
+      const response = await fetch(`http://localhost:3000/clientMeetings/${id}`, {
         method: 'DELETE',
       });
 

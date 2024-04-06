@@ -3,13 +3,10 @@ const AuditorProjectForm = require('../models/AuditorProjectForm.js');
 // Create
 const createAuditorProjectForm = async (data) => {
   try {
-    // Create a new instance of AuditorProjectForm using the provided data
     const auditorProjectForm = new AuditorProjectForm(data);
-    // Save the new instance to the database
     const result = await auditorProjectForm.save();
     return result;
   } catch (error) {
-    // Handle any errors that occur during the creation process
     throw error;
   }
 };
@@ -17,11 +14,9 @@ const createAuditorProjectForm = async (data) => {
 // Read all
 const getAllAuditorProjectForm = async () => {
   try {
-    // Retrieve all auditor project forms from the database
     const result = await AuditorProjectForm.find();
     return result;
   } catch (error) {
-    // Handle any errors that occur during the retrieval process
     throw error;
   }
 };
@@ -29,7 +24,6 @@ const getAllAuditorProjectForm = async () => {
 // Update
 const updateAuditorProjectForm = async (auditorProjectFormId, newData) => {
   try {
-    // Find and update the auditor project form by its ID with the new data
     const result = await AuditorProjectForm.findByIdAndUpdate(
       auditorProjectFormId,
       { $set: newData },
@@ -37,7 +31,6 @@ const updateAuditorProjectForm = async (auditorProjectFormId, newData) => {
     );
     return result;
   } catch (error) {
-    // Handle any errors that occur during the update process
     throw error;
   }
 };
@@ -45,11 +38,9 @@ const updateAuditorProjectForm = async (auditorProjectFormId, newData) => {
 // Delete
 const deleteAuditorProjectForm = async (auditorProjectFormId) => {
   try {
-    // Find and delete the auditor project form by its ID
     const result = await AuditorProjectForm.findByIdAndDelete(auditorProjectFormId);
     return result;
   } catch (error) {
-    // Handle any errors that occur during the deletion process
     throw error;
   }
 };

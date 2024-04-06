@@ -8,21 +8,21 @@ const Schema = mongoose.Schema;
 const clientFeedbackSchema = new Schema({
   feedbackType: {
     type: String,
-    required: true // Type of feedback is a required field
+    required: true 
   },
   dateReceived: {
     type: Date,
-    required: true // Date of feedback receipt is a required field
+    required: true 
   },
   detailedFeedback: {
     type: String,
-    required: true // Detailed feedback is a required field
+    required: true 
   },
   actionTaken: {
-    type: String // Action taken based on feedback (optional field)
+    type: String 
   },
   closureDate: {
-    type: Date // Date when the feedback issue was resolved (optional field)
+    type: Date 
   },
   project: {
     type: String,

@@ -52,7 +52,7 @@ const VersionHistoryTable = () => {
 
   const fetchVersionHistory = async () => {
     try {
-      const response = await fetch('http://localhost:3000/versionHistory');
+      const response = await fetch('http://localhost:3000/versionHistories');
       const data = await response.json();
       setVersionHistory(data);
     } catch (error) {
@@ -74,7 +74,7 @@ const VersionHistoryTable = () => {
 
   const handleAddEntry = async () => {
     try {
-      const response = await fetch('http://localhost:3000/versionHistory', {
+      const response = await fetch('http://localhost:3000/versionHistories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ const VersionHistoryTable = () => {
     try {
       const updatedEntry = versionHistory.find((entry) => entry._id === id);
 
-      const response = await fetch(`http://localhost:3000/versionHistory/${id}`, {
+      const response = await fetch(`http://localhost:3000/versionHistories/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const VersionHistoryTable = () => {
 
   const handleDeleteEntry = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/versionHistory/${id}`, {
+      const response = await fetch(`http://localhost:3000/versionHistories/${id}`, {
         method: 'DELETE',
       });
 

@@ -52,7 +52,7 @@ const ClientFeedbackTable = () => {
   // Function to fetch client feedback data from the API
   const fetchClientFeedback = async () => {
     try {
-      const response = await fetch('http://localhost:3000/clientFeedback');
+      const response = await fetch('http://localhost:3000/clientFeedbacks');
       const data = await response.json();
       setClientFeedback(data);
     } catch (error) {
@@ -76,7 +76,7 @@ const ClientFeedbackTable = () => {
   // Function to add new client feedback
   const handleAddFeedback = async () => {
     try {
-      const response = await fetch('http://localhost:3000/clientFeedback', {
+      const response = await fetch('http://localhost:3000/clientFeedbacks', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const ClientFeedbackTable = () => {
     try {
       const updatedFeedback = clientFeedback.find((feedback) => feedback._id === id);
 
-      const response = await fetch(`http://localhost:3000/clientFeedback/${id}`, {
+      const response = await fetch(`http://localhost:3000/clientFeedbacks/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const ClientFeedbackTable = () => {
   // Function to delete client feedback
   const handleDeleteFeedback = async (id) => {
     try {
-      await fetch(`http://localhost:3000/clientFeedback/${id}`, {
+      await fetch(`http://localhost:3000/clientFeedbacks/${id}`, {
         method: 'DELETE',
       });
 

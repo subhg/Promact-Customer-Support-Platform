@@ -7,7 +7,6 @@ const scopeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  // Other fields of the scope collection can be added here
 });
 
 // Create the Scope model based on the schema

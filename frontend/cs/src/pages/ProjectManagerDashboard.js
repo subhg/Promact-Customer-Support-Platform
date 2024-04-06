@@ -21,7 +21,7 @@ import RiskProfilingForm from '../components/AllTablesAndForms/RiskProfilingForm
 import StackandScope from '../components/AllTablesAndForms/StackandScope';
 import StakeholderTable from '../components/AllTablesAndForms/StakeholderTable';
 import VersionHistoryTable from '../components/AllTablesAndForms/VersionHistoryTable';
-
+import DownloadPdf from '../components/AllTablesAndForms/DownloadPdf';
 // Functional component for the ProjectManager page
 const ProjectManager = () => {
   return (
@@ -45,6 +45,7 @@ const ProjectManager = () => {
         <Tab>Version History</Tab>
       </TabList>
       <div>
+        <DownloadPdf/>
         <TabPanel>
           <AllProjectTable/>
         </TabPanel>

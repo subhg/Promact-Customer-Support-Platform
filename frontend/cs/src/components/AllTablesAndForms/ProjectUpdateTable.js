@@ -45,7 +45,7 @@ const ProjectUpdateTable = () => {
   // Function to fetch project updates
   const fetchProjectUpdates = async () => {
     try {
-      const response = await fetch('http://localhost:3000/projectUpdate');
+      const response = await fetch('http://localhost:3000/projectUpdates');
       const data = await response.json();
       setProjectUpdates(data); // Set project updates in state
     } catch (error) {
@@ -81,7 +81,7 @@ const ProjectUpdateTable = () => {
 
       setNewUpdate(prevNewUpdate => ({ ...prevNewUpdate, date: dateObject }));
 
-      const response = await fetch('http://localhost:3000/projectUpdate', {
+      const response = await fetch('http://localhost:3000/projectUpdates', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const ProjectUpdateTable = () => {
     try {
       const updatedUpdate = projectUpdates.find(update => update._id === id);
 
-      const response = await fetch(`http://localhost:3000/projectUpdate/${id}`, {
+      const response = await fetch(`http://localhost:3000/projectUpdates/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ const ProjectUpdateTable = () => {
   // Function to delete a project update
   const handleDeleteUpdate = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/projectUpdate/${id}`, {
+      const response = await fetch(`http://localhost:3000/projectUpdates/${id}`, {
         method: 'DELETE',
       });
 

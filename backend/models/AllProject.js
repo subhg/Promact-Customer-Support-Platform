@@ -19,7 +19,7 @@ const allProjectSchema = new mongoose.Schema({
     required: true
   },
   members: {
-    type: Number, // Assuming members are represented as an array of strings (usernames or IDs)
+    type: Number, 
     required: true
   }
 });

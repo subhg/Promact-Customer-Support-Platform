@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+// Import CRUD operations for Stakeholder
 const {
     createStakeholder,
     getStakeholderById,
@@ -9,9 +10,9 @@ const {
     deleteStakeholder,
 } = require('../controllers/StakeholderCrud');
 
+// Route to create a new stakeholder
 router.post('/', async (req, res) => {
     try {
-        console.log('hey')
         const result = await createStakeholder(req.body);
         res.json(result);
     } catch (error) {
@@ -19,9 +20,9 @@ router.post('/', async (req, res) => {
     }
 });
 
+// Route to get a stakeholder by its ID
 router.get('/:id', async (req, res) => {
     try {
-        console.log('hey')
         const result = await getStakeholderById(req.params.id);
         res.json(result);
     } catch (error) {
@@ -29,6 +30,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// Route to get all stakeholders
 router.get('/', async (req, res) => {
     try {
         const result = await getAllStakeholders();
@@ -38,6 +40,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Route to update a stakeholder by its ID
 router.put('/:id', async (req, res) => {
     try {
         const result = await updateStakeholder(req.params.id, req.body);
@@ -47,6 +50,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// Route to delete a stakeholder by its ID
 router.delete('/:id', async (req, res) => {
     try {
         const result = await deleteStakeholder(req.params.id);

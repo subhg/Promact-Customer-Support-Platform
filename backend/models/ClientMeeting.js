@@ -8,19 +8,17 @@ const Schema = mongoose.Schema;
 const clientMeetingSchema = new Schema({
   date: {
     type: Date,
-    required: true // Date of the meeting is a required field
+    required: true 
   },
   duration: {
     type: String,
-    required: true // Duration of the meeting is a required field
+    required: true 
   },
   momLink: {
-    type: String
-    // Optional: Field for the link to the Meeting Minutes (MOM)
+    type: String,
   },
   comments: {
-    type: String
-    // Optional: Field for additional comments or notes about the meeting
+    type: String,
   },
   project: {
     type: String,

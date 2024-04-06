@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const projectStackSchema = new mongoose.Schema({
   tech: {
-    type: [String], // Assuming tech can be multiple technologies
+    type: [String], 
     required: true
   }
 });

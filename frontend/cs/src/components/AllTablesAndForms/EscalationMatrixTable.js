@@ -38,7 +38,7 @@ const EscalationMatrixTable = ({ type }) => {
 
   const fetchEscalationMatrix = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:3000/escalationMatrix/${type}`);
+      const response = await fetch(`http://localhost:3000/escalationMatrices/${type}`);
       const data = await response.json();
       setEscalationMatrix(data);
     } catch (error) {
@@ -52,7 +52,7 @@ const EscalationMatrixTable = ({ type }) => {
 
   const handleAddLevel = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/escalationMatrix/${type}`, {
+      const response = await fetch(`http://localhost:3000/escalationMatrices/${type}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ const EscalationMatrixTable = ({ type }) => {
 
   const handleDeleteLevel = async (levelId) => {
     try {
-      await fetch(`http://localhost:3000/escalationMatrix/${type}/${levelId}`, {
+      await fetch(`http://localhost:3000/escalationMatrices/${type}/${levelId}`, {
         method: 'DELETE',
       });
       const updatedMatrix = escalationMatrix.filter(level => level._id !== levelId);
@@ -81,7 +81,7 @@ const EscalationMatrixTable = ({ type }) => {
 
   const handleUpdateLevel = async (levelId, updatedLevel) => {
     try {
-      await fetch(`http://localhost:3000/escalationMatrix/${type}/${levelId}`, {
+      await fetch(`http://localhost:3000/escalationMatrices/${type}/${levelId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

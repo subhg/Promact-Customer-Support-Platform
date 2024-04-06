@@ -53,7 +53,7 @@ const StackandScope = () => {
   // Function to fetch scopes
   const fetchScopes = async () => {
     try {
-      const response = await fetch('http://localhost:3000/scope');
+      const response = await fetch('http://localhost:3000/scopes');
       const data = await response.json();
       setScopes(data);
     } catch (error) {
@@ -75,7 +75,7 @@ const StackandScope = () => {
   // Function to add a new scope
   const handleAddScope = async () => {
     try {
-      const response = await fetch('http://localhost:3000/scope', {
+      const response = await fetch('http://localhost:3000/scopes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ const StackandScope = () => {
   // Function to update an existing scope
   const handleUpdateScope = async (id, updatedScope) => {
     try {
-      const response = await fetch(`http://localhost:3000/scope/${id}`, {
+      const response = await fetch(`http://localhost:3000/scopes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -200,7 +200,7 @@ const StackandScope = () => {
   // Function to delete an existing scope
   const handleDeleteScope = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/scope/${id}`, {
+      const response = await fetch(`http://localhost:3000/scopes/${id}`, {
         method: 'DELETE',
       });
 

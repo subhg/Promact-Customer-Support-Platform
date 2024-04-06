@@ -141,12 +141,15 @@ const StakeholderTable = () => {
             <tr key={stakeholder._id}>
               <td>
                 {editingRows[stakeholder._id] ? (
-                  <input
+                  <select
                     className="input"
-                    type="text"
                     value={stakeholder.title}
                     onChange={(e) => handleInputChange('title', e.target.value, stakeholder._id)}
-                  />
+                  >
+                    <option value="Project Manager">Project Manager</option>
+                    <option value="Client">Client</option>
+                    <option value="Account Manager">Account Manager</option>
+                  </select>
                 ) : (
                   stakeholder.title
                 )}
@@ -190,12 +193,15 @@ const StakeholderTable = () => {
           {userRole === 'admin' || userRole === 'auditor' ? (
             <tr>
               <td>
-                <input
+                <select
                   className="input"
-                  type="text"
                   value={newStakeholder.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
-                />
+                >
+                  <option value="Project Manager">Project Manager</option>
+                  <option value="Client">Client</option>
+                  <option value="Account Manager">Account Manager</option>
+                </select>
               </td>
               <td>
                 <input
